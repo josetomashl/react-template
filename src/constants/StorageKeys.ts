@@ -1,3 +1,3 @@
 export default {
-  TOKEN: 'user_token'
+  USER: 'fiscoo_client_info',
 };

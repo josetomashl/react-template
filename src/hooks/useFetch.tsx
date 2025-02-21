@@ -1,6 +1,6 @@
-import StorageKeys from '@/constants/StorageKeys';
-import { useEffect, useState } from 'react';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import CookieKeys from '@/constants/CookieKeys';
+import { useState } from 'react';
+import useCookie from './useCookie';
 
 type Methods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 type SuccessFetchState<ResponseType> = {
@@ -15,20 +15,13 @@ type FailureFetchState = {
 export default function useFetch<ResponseType, RequestBodyType = undefined>(
   url: string,
   method: Methods = 'GET',
-  body?: RequestBodyType,
-  fire: boolean = false
+  body?: RequestBodyType
 ) {
-  const [token] = useLocalStorage(StorageKeys.TOKEN);
+  const [token] = useCookie(CookieKeys.TOKEN);
 
   const [response, setResponse] = useState<ResponseType | string>();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    if (fire && method === 'GET') {
-      request();
-    }
-  }, [fire, method]);
 
   async function request(newUrl?: string): Promise<SuccessFetchState<ResponseType> | FailureFetchState> {
     try {
@@ -43,9 +36,9 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: bodyRaw
+        body: bodyRaw,
       });
       if (response.ok && response.status >= 200 && response.status <= 299) {
         const data = await response.json();
@@ -63,7 +56,7 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
         console.warn('Fetch error: ', typeof error === 'string' ? error : JSON.stringify(error));
         const res: FailureFetchState = {
           data: '',
-          error: true
+          error: true,
         };
         switch (response.status) {
           case 400:
@@ -93,7 +86,7 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
       console.warn('Fetch error: ', error);
       const res: FailureFetchState = {
         data: typeof error === 'string' ? error : 'An unexpected error has occurred',
-        error: true
+        error: true,
       };
       setIsError(true);
       setIsLoading(false);

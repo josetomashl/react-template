@@ -9,14 +9,20 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  dev: {
+    sourcemap: {
+      css: true,
+      js: true
+    }
+  },
+  build: {
+    minify: true,
+    manifest: true
+  },
   preview: {
     allowedHosts: true
   },
   server: {
     allowedHosts: true
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true
   }
 });
