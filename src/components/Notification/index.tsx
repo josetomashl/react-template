@@ -5,26 +5,26 @@ import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
 export default function Notification() {
-  const state = useAppSelector((state) => state.root.notification);
+  const notif = useAppSelector((state) => state.root.notification);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (state) {
+    if (notif) {
       const timeout = setTimeout(() => {
         dispatch(hideNotification());
       }, 2000);
       return () => clearTimeout(timeout);
     }
-  }, [state]);
+  }, [notif]);
 
-  if (!state) {
+  if (!notif) {
     return null;
   }
 
   return (
-    <div className={css(styles.container, styles[state.type])}>
-      <img src={`/images/${state.type}.png`} loading='lazy' alt={state.type} />
-      <p>{state.content}</p>
+    <div className={css(styles.container, styles[notif.type])}>
+      <img src={`/images/${notif.type}.png`} loading='lazy' alt={notif.type} />
+      <p>{notif.content}</p>
     </div>
   );
 }

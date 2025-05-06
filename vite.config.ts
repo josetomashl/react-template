@@ -1,28 +1,17 @@
+import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
+  mode: 'production',
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
-  dev: {
-    sourcemap: {
-      css: true,
-      js: true
-    }
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   build: {
-    minify: true,
-    manifest: true
+    outDir: 'dist',
+    manifest: true,
   },
-  preview: {
-    allowedHosts: true
-  },
-  server: {
-    allowedHosts: true
-  }
 });
