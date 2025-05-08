@@ -1,11 +1,11 @@
-import AuthLayout from '@/layouts/Auth';
-import LoginPage from '@/pages/auth/login';
-import RegisterPage from '@/pages/auth/register';
-import HomePage from '@/pages/home';
+import { AuthLayout } from '@/layouts/Auth';
+import { LoginPage } from '@/pages/auth/login';
+import { RegisterPage } from '@/pages/auth/register';
+import { HomePage } from '@/pages/home';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import DefaultLayout from './layouts/Default';
+import { DefaultLayout } from './layouts/Default';
 
-export default function AppRoutes() {
+export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>

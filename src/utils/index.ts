@@ -1,5 +1,11 @@
-import type { Locale } from '@/plugins/constants/locales';
+import type { LocaleType } from '@/hooks/useTranslations';
 
+/**
+ * Combines multiple class names into a single string.
+ *
+ * @param classes - A list of CSS class names to combine.
+ * @returns A single string with all class names separated by a space.
+ */
 export function css(...classes: string[]) {
   return classes.join(' ');
 }
@@ -57,9 +63,10 @@ export function toPrice(str: number | string, isAbsolute?: boolean): string | nu
  *  - MMM: Abbreviated month name (e.g., Jan, Feb)
  *  - YYYY: Full year (4 digits)
  *  - YYYY: Abbreviated year (2 last digits)
+ * @param locale - The locale to format date string. Defaults to 'es'.
  * @returns A formatted date string or null if the input is invalid.
  */
-export function toDate(date: string, format = 'DD/MM/YYYY', locale: Locale = 'en'): string | null {
+export function toDate(date: string, format = 'DD/MM/YYYY', locale: LocaleType = 'es'): string | null {
   if (!date) {
     return null;
   }
@@ -112,9 +119,10 @@ export function toTime(date: string): string | null {
  * Converts a date string into a formatted date-time string in the format 'DD/MM/YYYY HH:mm:ss'.
  *
  * @param date - The input date string.
+ * @param locale - The locale to format date string. Defaults to 'es'.
  * @returns A formatted date-time string or null if the input is invalid.
  */
-export function toDateTime(date: string, locale: Locale): string | null {
+export function toDateTime(date: string, locale: LocaleType = 'es'): string | null {
   if (!date) {
     return null;
   }
@@ -125,7 +133,7 @@ export function toDateTime(date: string, locale: Locale): string | null {
   }
 
   // Format date part using `toDate`
-  const datePart = toDate(date, 'DD/MM/YYYY');
+  const datePart = toDate(date, 'DD/MM/YYYY', locale);
   const timePart = toTime(date);
 
   return `${datePart} ${timePart}`;

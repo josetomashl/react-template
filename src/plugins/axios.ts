@@ -1,4 +1,4 @@
-import CookieKeys from '@/constants/CookieKeys';
+import CookieKeys from '@/plugins/constants/cookies';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -6,10 +6,10 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API,
   timeout: 5000,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
   responseEncoding: 'utf-8',
-  responseType: 'json',
+  responseType: 'json'
 });
 
 axiosInstance.interceptors.request.use(

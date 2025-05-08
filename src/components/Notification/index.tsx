@@ -4,7 +4,7 @@ import { css } from '@/utils';
 import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
-export default function Notification() {
+export function Notification() {
   const notif = useAppSelector((state) => state.root.notification);
   const dispatch = useAppDispatch();
 

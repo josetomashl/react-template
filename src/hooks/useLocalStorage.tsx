@@ -1,13 +1,14 @@
+import { type StorageKey, StorageKeys } from '@/plugins/constants/storage';
 import { useState } from 'react';
 
-export default function useLocalStorage<T>(key: string, defaultValue?: T) {
+export function useLocalStorage<T = string>(key: StorageKey, defaultValue?: T) {
   const [storedValue, setStoredValue] = useState<T | null>(() => {
     try {
-      const value = window.localStorage.getItem(key);
+      const value = window.localStorage.getItem(StorageKeys[key]);
       if (value) {
         return JSON.parse(value);
       } else {
-        window.localStorage.setItem(key, JSON.stringify(defaultValue ?? null));
+        window.localStorage.setItem(StorageKeys[key], JSON.stringify(defaultValue ?? null));
         return defaultValue ?? null;
       }
     } catch {
@@ -18,10 +19,10 @@ export default function useLocalStorage<T>(key: string, defaultValue?: T) {
   const setValue = (newValue: T) => {
     try {
       setStoredValue(newValue);
-      window.localStorage.setItem(key, JSON.stringify(newValue));
+      window.localStorage.setItem(StorageKeys[key], JSON.stringify(newValue));
     } catch {
       setStoredValue(defaultValue ?? null);
-      window.localStorage.setItem(key, JSON.stringify(defaultValue ?? null));
+      window.localStorage.setItem(StorageKeys[key], JSON.stringify(defaultValue ?? null));
     }
   };
 

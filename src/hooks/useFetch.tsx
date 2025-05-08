@@ -1,6 +1,5 @@
-import CookieKeys from '@/constants/CookieKeys';
 import { useState } from 'react';
-import useCookie from './useCookie';
+import { useCookie } from './useCookie';
 
 type Methods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 type SuccessFetchState<ResponseType> = {
@@ -17,7 +16,7 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
   method: Methods = 'GET',
   body?: RequestBodyType
 ) {
-  const [token] = useCookie(CookieKeys.TOKEN);
+  const [token] = useCookie('USER_TOKEN');
 
   const [response, setResponse] = useState<ResponseType | string>();
   const [isLoading, setIsLoading] = useState(true);
@@ -36,9 +35,9 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         },
-        body: bodyRaw,
+        body: bodyRaw
       });
       if (response.ok && response.status >= 200 && response.status <= 299) {
         const data = await response.json();
@@ -56,7 +55,7 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
         console.warn('Fetch error: ', typeof error === 'string' ? error : JSON.stringify(error));
         const res: FailureFetchState = {
           data: '',
-          error: true,
+          error: true
         };
         switch (response.status) {
           case 400:
@@ -86,7 +85,7 @@ export default function useFetch<ResponseType, RequestBodyType = undefined>(
       console.warn('Fetch error: ', error);
       const res: FailureFetchState = {
         data: typeof error === 'string' ? error : 'An unexpected error has occurred',
-        error: true,
+        error: true
       };
       setIsError(true);
       setIsLoading(false);

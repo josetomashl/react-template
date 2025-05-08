@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
 
-export default function HomePage() {
+export function HomePage() {
   return <p className={styles.something}>Home page</p>;
 }
