@@ -11,12 +11,12 @@ type FailureFetchState = {
   error: true;
 };
 
-export default function useFetch<ResponseType, RequestBodyType = undefined>(
+export default function useFetch<RequestBodyType = undefined, ResponseType = undefined>(
   url: string,
   method: Methods = 'GET',
   body?: RequestBodyType
 ) {
-  const [token] = useCookie('USER_TOKEN');
+  const [token] = useCookie<string>('USER_TOKEN');
 
   const [response, setResponse] = useState<ResponseType | string>();
   const [isLoading, setIsLoading] = useState(true);

@@ -7,12 +7,10 @@ interface NotificationState {
 
 interface RootState {
   notification: NotificationState | null;
-  isAuthenticated: boolean;
 }
 
 const initialState: RootState = {
-  notification: null,
-  isAuthenticated: false,
+  notification: null
 };
 
 export const rootSlice = createSlice({
@@ -25,7 +23,7 @@ export const rootSlice = createSlice({
     ) => {
       state.notification = {
         type: action.payload.type ?? 'success',
-        content: action.payload.content,
+        content: action.payload.content
       };
     },
     hideNotification: (state) => {
@@ -33,9 +31,8 @@ export const rootSlice = createSlice({
     },
     reset: (state) => {
       state.notification = initialState.notification;
-      state.isAuthenticated = initialState.isAuthenticated;
-    },
-  },
+    }
+  }
 });
 
 export const { showNotification, hideNotification } = rootSlice.actions;

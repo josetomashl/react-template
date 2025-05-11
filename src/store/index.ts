@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { rootSlice } from './modules/root';
 
 export const store = configureStore({
-  reducer: {
-    root: rootSlice.reducer,
-  },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  reducer: {
+    root: rootSlice.reducer
+  }
 });
 
 export type RootState = ReturnType<typeof store.getState>;

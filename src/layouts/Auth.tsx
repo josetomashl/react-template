@@ -1,6 +1,12 @@
-import { Outlet } from 'react-router';
+import { useAuth } from '@/hooks/useAuth';
+import { Navigate, Outlet } from 'react-router';
 
 export function AuthLayout() {
-  // TODO: check authentication status to redirect to login page or keep here
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to='/login' replace />;
+  }
+
   return <Outlet />;
 }

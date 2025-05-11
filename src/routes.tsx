@@ -21,11 +21,11 @@ export function AppRoutes() {
           <Route path='other' element={<LoginPage />} />
         </Route>
 
-        {/* <Route path='concerts'>
+        {/* <Route path='legal'>
           <Route index element={<ConcertsHome />} />
-          <Route path=':city' element={<City />} />
+          <Route path='terms-of-use' element={<TermsOfUsePage />} />
           <Route path='trending' element={<Trending />} />
-        </Route> */}
+          </Route> */}
       </Routes>
     </BrowserRouter>
   );

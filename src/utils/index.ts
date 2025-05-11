@@ -53,60 +53,65 @@ export function toPrice(str: number | string, isAbsolute?: boolean): string | nu
 }
 
 /**
- * Converts a date string into a formatted time string in the format 'DD/MM/YYYY' or provided one.
+ * Formats a date string into a localized format with flexible placeholders.
  *
- * @param date - The input date string.
- * @param format - The desired date format (default is 'DD/MM/YYYY'). Supported placeholders:
- *  - DD: Day of the month (2 digits)
- *  - DDD: Day of the week (e.g., Mon, Tue)
- *  - MM: Month of the year (2 digits)
- *  - MMM: Abbreviated month name (e.g., Jan, Feb)
- *  - YYYY: Full year (4 digits)
- *  - YYYY: Abbreviated year (2 last digits)
- * @param locale - The locale to format date string. Defaults to 'es'.
- * @returns A formatted date string or null if the input is invalid.
+ * Supported placeholders:
+ *  - D: Day of month (no leading zero)
+ *  - DD: Day of month (2 digits)
+ *  - M: Month number (no leading zero)
+ *  - MM: Month number (2 digits)
+ *  - MMM: Abbreviated month name (e.g., 'jan')
+ *  - MMMM: Full month name (e.g., 'january')
+ *  - YY: Last 2 digits of year
+ *  - YYYY: Full year
+ *
+ * @param date - Input date string. If invalid, current date is used.
+ * @param format - Format string using supported placeholders.
+ * @param locale - BCP 47 locale string (e.g., 'es', 'en-US'). Defaults to 'es'.
+ * @returns A formatted, localized date string.
  */
-export function toDate(date: string, format = 'DD/MM/YYYY', locale: LocaleType = 'es'): string | null {
-  if (!date) {
-    return null;
-  }
-
-  const parsedDate = new Date(date);
+export function toDate(
+  date: string = new Date().toISOString(),
+  format: string = 'DD/MM/YYYY',
+  locale: LocaleType = 'es'
+): string {
+  let parsedDate = new Date(date);
   if (isNaN(parsedDate.getTime())) {
-    return null;
+    parsedDate = new Date();
   }
 
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = parsedDate.getDate();
+  const month = parsedDate.getMonth();
+  const year = parsedDate.getFullYear();
+
+  const formatWithIntl = (options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat(locale, options).format(parsedDate);
 
   const replacements: Record<string, string> = {
-    DD: formatTwoDigit(parsedDate.getDate()),
-    DDD: dayNames[parsedDate.getDay()],
-    MM: formatTwoDigit(parsedDate.getMonth() + 1),
-    MMM: monthNames[parsedDate.getMonth()],
-    YY: parsedDate.getFullYear().toString().slice(-2),
-    YYYY: parsedDate.getFullYear().toString()
+    D: day.toString(),
+    DD: day.toString().padStart(2, '0'),
+    M: (month + 1).toString(),
+    MM: (month + 1).toString().padStart(2, '0'),
+    MMM: formatWithIntl({ month: 'short' }),
+    MMMM: formatWithIntl({ month: 'long' }),
+    YY: year.toString().slice(-2),
+    YYYY: year.toString()
   };
 
-  const formattedDate = format.replace(/DD|DDD|MM|MMM|YY|YYYY/g, (match) => replacements[match]);
-
-  return formattedDate;
+  return format.replace(/MMMM|MMM|MM|M|DD|D|YYYY|YY/g, (match) => replacements[match]);
 }
 
 /**
- * Converts a date string into a formatted time string in the format 'HH:MM'.
+ * Formats a time string to 'HH:MM'.
  *
  * @param date - The input date string.
  * @returns A formatted time string or null if the input is invalid.
  */
-export function toTime(date: string): string | null {
-  if (!date) {
-    return null;
-  }
+export function toTime(date: string = new Date().toISOString()): string {
+  let parsedDate = new Date(date);
 
-  const parsedDate = new Date(date);
   if (isNaN(parsedDate.getTime())) {
-    return null;
+    parsedDate = new Date();
   }
 
   const hours = formatTwoDigit(parsedDate.getHours());
@@ -122,14 +127,10 @@ export function toTime(date: string): string | null {
  * @param locale - The locale to format date string. Defaults to 'es'.
  * @returns A formatted date-time string or null if the input is invalid.
  */
-export function toDateTime(date: string, locale: LocaleType = 'es'): string | null {
-  if (!date) {
-    return null;
-  }
-
-  const parsedDate = new Date(date);
+export function toDateTime(date: string = new Date().toISOString(), locale: LocaleType = 'es'): string | null {
+  let parsedDate = new Date(date);
   if (isNaN(parsedDate.getTime())) {
-    return null; // Invalid date
+    parsedDate = new Date();
   }
 
   // Format date part using `toDate`
