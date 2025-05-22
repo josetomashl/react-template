@@ -1,16 +1,14 @@
-import type { ToastType } from '@/contexts/Toast';
-import './toast.css';
+import { useToast } from '@/hooks/useToast';
+import './styles.module.scss';
 
-type Props = {
-  toasts: ToastType[];
-};
+export const ToastContainer = () => {
+  const { toasts } = useToast();
 
-export const ToastContainer = ({ toasts }: Props) => {
   return (
     <div className='toast-container'>
-      {toasts.map(({ id, message, type }) => (
-        <div key={id} className={`toast toast-${type}`}>
-          {message}
+      {toasts.map((item) => (
+        <div key={item.id} className={`toast toast-${item.type}`}>
+          {item.message}
         </div>
       ))}
     </div>

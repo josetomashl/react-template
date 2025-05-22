@@ -1,6 +1,6 @@
-import { User } from '@/dtos/User';
+import type { User } from '@/dtos/User';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { createContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, type PropsWithChildren, useEffect, useState } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -13,7 +13,7 @@ interface AuthContextType {
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useLocalStorage<{ user: User; token: string }>('USER');
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);

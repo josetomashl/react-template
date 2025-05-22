@@ -1,22 +1,23 @@
 import { ToastContainer } from '@/components/ToastContainer';
+import type { Toast } from '@/types/Toast';
 import { createContext, useState, useCallback, PropsWithChildren } from 'react';
 
-export type ToastType = {
-  id: number;
-  message: string;
-  type: 'info' | 'success' | 'warning' | 'error';
-};
+interface ToastContextType {
+  toasts: Toast[];
+  addToast: (message: string, type: Toast['type'], duration?: number) => void;
+}
 
-const ToastContext = createContext({
+const ToastContext = createContext<ToastContextType>({
+  toasts: [],
   addToast: () => {}
 });
 
-const ToastProvider = ({ children }: PropsWithChildren) => {
-  const [toasts, setToasts] = useState<ToastType[]>([]);
+const ToastProvider = (props: PropsWithChildren) => {
+  const [toasts, setToasts] = useState<Toast[]>([]);
 
   const addToast = useCallback(
-    (message: string = 'Actualizado con éxito.', type: ToastType['type'] = 'info', duration = 3000) => {
-      const id = Date.now();
+    (message: string = 'Actualizado con éxito.', type: Toast['type'] = 'info', duration = 3000) => {
+      const id = `${Date.now()}`;
       setToasts((prev) => [...prev, { id, message, type }]);
 
       // Remove toast after delay
@@ -28,9 +29,9 @@ const ToastProvider = ({ children }: PropsWithChildren) => {
   );
 
   return (
-    <ToastContext.Provider value={{ addToast }}>
-      {children}
-      <ToastContainer toasts={toasts} />
+    <ToastContext.Provider value={{ toasts, addToast }}>
+      {props.children}
+      <ToastContainer />
     </ToastContext.Provider>
   );
 };

@@ -1,21 +1,20 @@
-import { ReactNode, useEffect } from 'react';
+import { type PropsWithChildren, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './styles.module.scss';
 
-type Props = {
+interface Props extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
-  children: ReactNode;
-};
+}
 
-export const Modal = ({ isOpen, onClose, children }: Props) => {
+export const Modal = (props: Props) => {
   const modalRoot = document.getElementById('modal-root');
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') props.onClose();
     };
-    if (isOpen) {
+    if (props.isOpen) {
       document.addEventListener('keydown', handleEsc);
       document.body.style.overflow = 'hidden'; // Prevent background scroll
     }
@@ -23,19 +22,19 @@ export const Modal = ({ isOpen, onClose, children }: Props) => {
       document.removeEventListener('keydown', handleEsc);
       document.body.style.overflow = 'auto';
     };
-  }, [isOpen, onClose]);
+  }, [props.isOpen, props.onClose]);
 
-  if (!isOpen || !modalRoot) {
+  if (!props.isOpen || !modalRoot) {
     return null;
   }
 
   return ReactDOM.createPortal(
-    <div className='modal-overlay' onClick={onClose} role='dialog' aria-modal='true'>
+    <div className='modal-overlay' onClick={props.onClose} role='dialog' aria-modal='true'>
       <div className='modal-container' onClick={(e) => e.stopPropagation()} role='document'>
-        <button className='modal-close-btn' onClick={onClose} aria-label='Close modal'>
+        <button className='modal-close-btn' onClick={props.onClose} aria-label='Close modal'>
           &times;
         </button>
-        {children}
+        {props.children}
       </div>
     </div>,
     modalRoot
