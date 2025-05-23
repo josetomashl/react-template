@@ -1,6 +1,6 @@
-import CookieKeys from '@/plugins/constants/cookies';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { CookieKeys } from './constants/cookies';
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API,
@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = Cookies.get(CookieKeys.TOKEN);
+    const token = Cookies.get(CookieKeys.USER_TOKEN);
     if (token) {
       config.headers.Token = token;
     }

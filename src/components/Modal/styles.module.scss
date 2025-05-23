@@ -1,6 +1,6 @@
-@use '@/assets/styles/variables.scss' as *;
+@use '@/assets/styles/variables' as *;
 
-.modal-overlay {
+.modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +13,7 @@
   z-index: 999;
   animation: fadeIn 0.3s ease;
 }
-.modal-container {
+.modalContainer {
   background-color: $background;
   border-radius: 8px;
   max-width: 500px;
@@ -23,7 +23,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   animation: scaleIn 0.3s ease;
 }
-.modal-close-btn {
+.modalCloseBtn {
   position: absolute;
   top: 12px;
   right: 16px;

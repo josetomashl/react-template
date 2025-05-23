@@ -1,38 +1,32 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-interface NotificationState {
-  type: 'error' | 'warning' | 'success';
-  content: string;
+export type NotificationType = 'success' | 'error' | 'info' | 'warning';
+export interface NotificationItem {
+  id: string;
+  message: string;
+  type: NotificationType;
 }
 
 interface RootState {
-  notification: NotificationState | null;
+  notifications: NotificationItem[];
 }
 
 const initialState: RootState = {
-  notification: null
+  notifications: []
 };
 
 export const rootSlice = createSlice({
   name: 'root',
   initialState,
   reducers: {
-    showNotification: (
-      state,
-      action: PayloadAction<Omit<NotificationState, 'type'> & Partial<Pick<NotificationState, 'type'>>>
-    ) => {
-      state.notification = {
-        type: action.payload.type ?? 'success',
-        content: action.payload.content
-      };
+    pushNotification: (state, action: PayloadAction<Omit<NotificationItem, 'id'>>) => {
+      const id = `${Date.now()}`;
+      state.notifications.push({ ...action.payload, id });
     },
-    hideNotification: (state) => {
-      state.notification = null;
-    },
-    reset: (state) => {
-      state.notification = initialState.notification;
+    removeNotification: (state, action: PayloadAction<string>) => {
+      state.notifications = state.notifications.filter((n) => n.id !== action.payload);
     }
   }
 });
 
-export const { showNotification, hideNotification } = rootSlice.actions;
+export const { pushNotification, removeNotification } = rootSlice.actions;

@@ -1,6 +1,6 @@
 import { type PropsWithChildren, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './styles.module.scss';
+import styles from './styles.module.scss';
 
 interface Props extends PropsWithChildren {
   isOpen: boolean;
@@ -29,9 +29,9 @@ export const Modal = (props: Props) => {
   }
 
   return ReactDOM.createPortal(
-    <div className='modal-overlay' onClick={props.onClose} role='dialog' aria-modal='true'>
-      <div className='modal-container' onClick={(e) => e.stopPropagation()} role='document'>
-        <button className='modal-close-btn' onClick={props.onClose} aria-label='Close modal'>
+    <div className={styles.modalOverlay} onClick={props.onClose} role='dialog' aria-modal='true'>
+      <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()} role='document'>
+        <button className={styles.modalCloseBtn} onClick={props.onClose} aria-label='Close modal'>
           &times;
         </button>
         {props.children}
