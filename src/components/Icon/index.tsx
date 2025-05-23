@@ -23,9 +23,9 @@ export function Icon({ name, size = 24, color = '#fff', fill = 'none' }: Props) 
       width={size}
       height={size}
       stroke={color}
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
       role='img'>
       <path d={path} />
     </svg>

@@ -1,0 +1,33 @@
+.sidebar {
+  width: 260px;
+  background: #1f2937;
+  color: #fff;
+  height: 100vh;
+  padding: 10px;
+  user-select: none;
+}
+
+.sidebarItem {
+  margin-bottom: 10px;
+}
+
+.sidebarLink,
+.sidebarChildLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+}
+
+.sidebarLink.active,
+.sidebarChildLink.active,
+.sidebarItem.active-parent > .sidebarLink {
+  background-color: #374151;
+}
+
+.sidebarChildren {
+  padding-left: 20px;
+}

@@ -16,18 +16,13 @@
   font-style: normal;
 }
 
-#root {
-  background-color: $background;
-  background-size: cover;
-  background-attachment: fixed;
-}
-
 :root {
   font-family: $body-font-family, Helvetica, Inter;
   line-height: 1.5;
   font-weight: 400;
 
   background-color: $background;
+  color: $dark;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
