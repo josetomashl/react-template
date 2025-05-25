@@ -21,8 +21,9 @@ export function AppRoutes() {
             <Route path='page-1' element={<Page1 />} />
             <Route path='page-2' element={<Page2 />} />
           </Route>
+
           {/* Pages with no navigation useful for being displayed in app */}
-          <Route path='other' element={<LoginPage />} />
+          <Route path='app' element={<Page1 />} />
         </Route>
 
         <Route path='legal'>

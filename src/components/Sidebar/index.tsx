@@ -1,26 +1,20 @@
+import { Icon } from '@/components/Icon';
 import { css } from '@/utils';
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router';
-import { Icon } from '../Icon';
-import { navItems, NavLinkItem } from './links';
+import { NavLink } from 'react-router';
+import { navItems, type NavLinkItem } from './links';
 import styles from './styles.module.scss';
 
 const SidebarItem = ({ item }: { item: NavLinkItem }) => {
-  const { pathname } = useLocation();
-  const isActive = pathname === item.path;
-
   return (
-    <div className={css(styles.sidebarItem, isActive ? styles.active : '')}>
-      <NavLink to={item.path} className={styles.sidebarLink}>
-        <Icon name={item.icon} />
-        <span>{item.label}</span>
-      </NavLink>
-    </div>
+    <NavLink to={item.path} className={({ isActive }) => css(isActive ? styles.active : '', styles.sidebarLink)}>
+      <Icon name={item.icon} />
+      <span>{item.label}</span>
+    </NavLink>
   );
 };
 
 export const Sidebar = () => {
-  const { pathname } = useLocation();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   const toggleGroup = (label: string) => {
@@ -35,26 +29,23 @@ export const Sidebar = () => {
       {navItems.map((item, index) => {
         if (item.path) {
           return <SidebarItem key={index} item={item} />;
-        } else if (item.children) {
-          const hasActiveChild = item.children?.some((child) => pathname === child.path);
-          const isOpen = openGroups[item.label] ?? hasActiveChild;
+        } else if (item.children?.length) {
+          const isOpen = openGroups[item.label];
 
           return (
-            <div key={index} className={css(styles.sidebarGroup, isOpen ? styles.open : '')}>
-              <div
-                className={css(styles.sidebarLink, hasActiveChild ? styles.activeParent : '')}
-                onClick={() => toggleGroup(item.label)}>
-                <Icon name={item.icon} />
-                <span>{item.label}</span>
-                <Icon name={isOpen ? 'circleCheck' : 'circleX'} />
-              </div>
-              {isOpen && (
-                <div className={styles.sidebarChildren}>
-                  {item.children.map((child, childIndex) => (
-                    <SidebarItem key={'child-' + childIndex} item={child} />
-                  ))}
+            <div key={index}>
+              <div className={styles.sidebarGroupHead} onClick={() => toggleGroup(item.label)}>
+                <div className={styles.sidebarLink}>
+                  <Icon name={item.icon} />
+                  <span>{item.label}</span>
                 </div>
-              )}
+                <Icon name={isOpen ? 'chevronUp' : 'chevronDown'} size={18} />
+              </div>
+              <div className={css(styles.sidebarChildren, isOpen ? styles.open : '')}>
+                {item.children.map((child, childIndex) => (
+                  <SidebarItem key={'child-' + childIndex} item={child} />
+                ))}
+              </div>
             </div>
           );
         }

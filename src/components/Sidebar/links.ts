@@ -27,24 +27,19 @@ export const navItems: NavItem[] = [
     children: [
       {
         label: 'Page legal 1',
-        path: '/legal/page-1',
+        path: '/page-1',
         icon: 'circleX'
       },
       {
         label: 'Page legal 2',
-        path: '/legal/page-2',
+        path: '/page-2',
         icon: 'circleInfo'
       }
     ]
   },
   {
-    label: 'Page 1',
-    path: '/page-1',
-    icon: 'circleX'
-  },
-  {
-    label: 'Page 2',
-    path: '/page-2',
+    label: 'App page',
+    path: '/app',
     icon: 'circleX'
   }
 ];
