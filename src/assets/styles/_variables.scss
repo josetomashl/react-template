@@ -21,17 +21,3 @@ $success: #48be48;
 $success-background: #e4f6e6;
 $error: #ee6d61;
 $error-background: #f9dddc;
-
-// BREAKPOINTS
-@mixin mobile {
-  @media only screen and (max-width: 480px) {
-    color: var();
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media only screen and (max-width: 992px) {
-    @content;
-  }
-}

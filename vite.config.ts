@@ -7,11 +7,19 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+      '@': path.resolve(__dirname, './src')
+    }
   },
   build: {
     outDir: 'dist',
-    manifest: true,
+    manifest: true
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        additionalData: `@import "@/assets/styles/variables.scss"; @import "@/assets/styles/mixins.scss";`
+      }
+    }
+  }
 });

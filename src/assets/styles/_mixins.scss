@@ -1,0 +1,13 @@
+// BREAKPOINTS
+@mixin mobile {
+  @media only screen and (max-width: 480px) {
+    color: var();
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: 992px) {
+    @content;
+  }
+}
