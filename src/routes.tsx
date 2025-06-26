@@ -4,6 +4,7 @@ import { RegisterPage } from '@/pages/auth/register';
 import { HomePage } from '@/pages/home';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { DefaultLayout } from './layouts/Default';
+import { NotFoundPage } from './pages/404';
 import { Page1 } from './pages/page1';
 import { Page2 } from './pages/page2';
 
@@ -30,6 +31,8 @@ export function AppRoutes() {
           <Route path='page-1' element={<Page1 />} />
           <Route path='page-2' element={<Page2 />} />
         </Route>
+
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
