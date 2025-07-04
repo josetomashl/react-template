@@ -28,6 +28,7 @@ export function AppRoutes() {
         </Route>
 
         <Route path='legal'>
+          <Route index element={<NotFoundPage />} />
           <Route path='page-1' element={<Page1 />} />
           <Route path='page-2' element={<Page2 />} />
         </Route>
