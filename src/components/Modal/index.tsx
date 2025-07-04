@@ -1,5 +1,5 @@
 import { type PropsWithChildren, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import styles from './styles.module.scss';
 
 interface Props extends PropsWithChildren {
@@ -28,7 +28,7 @@ export const Modal = (props: Props) => {
     return null;
   }
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div className={styles.modalOverlay} onClick={props.onClose} role='dialog' aria-modal='true'>
       <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()} role='document'>
         <button className={styles.modalCloseBtn} onClick={props.onClose} aria-label='Close modal'>
