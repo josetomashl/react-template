@@ -1,18 +1,28 @@
 import { css } from '@/utils';
 import { useState } from 'react';
+import { Icon, type IconNames } from '../Icon';
 import { Spinner } from '../Spinner';
 import styles from './styles.module.scss';
 
 type Props = {
-  title: string;
-  onClick: () => void | Promise<void>;
+  title?: string;
+  icon?: IconNames;
+  iconPosition?: 'left' | 'right';
+  onClick?: () => void | Promise<void>;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  rounded?: boolean;
 };
 
-// TODO: Add variants (icon only , icon + text, text only, etc.)
-
-export function Button({ title = '', onClick = () => {}, disabled = false, type = 'button' }: Props) {
+export function Button({
+  title = '',
+  icon = undefined,
+  iconPosition = 'left',
+  onClick = () => {},
+  disabled = false,
+  type = 'button',
+  rounded = false,
+}: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
@@ -28,13 +38,60 @@ export function Button({ title = '', onClick = () => {}, disabled = false, type 
     }
   };
 
-  return (
-    <button
-      onClick={handleClick}
-      type={type}
-      className={css(styles.button, loading ? styles.loading : '', disabled ? styles.disabled : '')}
-      disabled={disabled || loading}>
-      {loading ? <Spinner /> : title}
-    </button>
-  );
+  if (icon && !title) {
+    return (
+      <button
+        onClick={handleClick}
+        type={type}
+        className={css(
+          styles.button,
+          styles.iconButton,
+          rounded ? styles.rounded : '',
+          loading ? styles.loading : '',
+          disabled ? styles.disabled : ''
+        )}
+        disabled={disabled || loading}>
+        {loading ? <Spinner /> : <Icon name={icon} />}
+      </button>
+    );
+  } else if (icon && title) {
+    return (
+      <button
+        onClick={handleClick}
+        type={type}
+        className={css(
+          styles.button,
+          styles.iconTextButton,
+          rounded ? styles.rounded : '',
+          loading ? styles.loading : '',
+          disabled ? styles.disabled : ''
+        )}
+        disabled={disabled || loading}>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <>
+            {iconPosition === 'left' && <Icon name={icon} />}
+            {title}
+            {iconPosition === 'right' && <Icon name={icon} />}
+          </>
+        )}
+      </button>
+    );
+  } else {
+    return (
+      <button
+        onClick={handleClick}
+        type={type}
+        className={css(
+          styles.button,
+          rounded ? styles.rounded : '',
+          loading ? styles.loading : '',
+          disabled ? styles.disabled : ''
+        )}
+        disabled={disabled || loading}>
+        {loading ? <Spinner /> : title}
+      </button>
+    );
+  }
 }
