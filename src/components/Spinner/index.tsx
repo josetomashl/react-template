@@ -15,7 +15,7 @@ export function Spinner({ size = 32, className = '' }: Props) {
         cy='25'
         r='20'
         fill='none'
-        strokeWidth='5'
+        strokeWidth='6'
         strokeDasharray='90,150'
         strokeLinecap='round'
         transform='rotate(-90 25 25)'>
