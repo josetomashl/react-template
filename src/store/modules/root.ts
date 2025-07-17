@@ -12,7 +12,7 @@ interface RootState {
 }
 
 const initialState: RootState = {
-  notifications: []
+  notifications: [],
 };
 
 export const rootSlice = createSlice({
@@ -25,8 +25,8 @@ export const rootSlice = createSlice({
     },
     removeNotification: (state, action: PayloadAction<string>) => {
       state.notifications = state.notifications.filter((n) => n.id !== action.payload);
-    }
-  }
+    },
+  },
 });
 
 export const { pushNotification, removeNotification } = rootSlice.actions;
