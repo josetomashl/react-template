@@ -2,5 +2,5 @@
   "language_en": "English",
   "language_es": "Spanish",
   "hello": "Hello",
-  "replaced_text": "Replaced text: {message}."
+  "replaced_text": "Replaced text: {{message}}."
 }

@@ -9,7 +9,7 @@ async function loadTranslations(language: LocaleType): Promise<Translations> {
     const translations = await import(`../assets/translations/${language}.json`);
     return translations.default;
   } catch {
-    console.warn(`Could not load translations for language: ${language}. Defaulting to English.`);
+    console.warn(`Could not load translations for language: ${language}. Default language set to English.`);
     // Fallback to English if the specified language file is not found
     const defaultTranslations = await import(`../assets/translations/en.json`);
     return defaultTranslations.default;
@@ -18,10 +18,10 @@ async function loadTranslations(language: LocaleType): Promise<Translations> {
 
 /**
  * Replaces placeholders in a string with provided arguments.
- * Placeholders should be in the format `{key}`.
+ * Placeholders should be in the format `{{key}}`.
  */
 function replacePlaceholders(template: string, args: Record<string, string>): string {
-  return template.replace(/{(.*?)}/g, (_, key) => args[key] || `{${key}}`);
+  return template.replace(/{{(.*?)}}/g, (_, key) => args[key] || `{${key}}`);
 }
 
 export default function useTranslation() {
@@ -34,6 +34,7 @@ export default function useTranslation() {
 
   // Load translations whenever the language changes
   useEffect(() => {
+    document.documentElement.lang = language || defaultLanguage;
     loadTranslations(language as LocaleType).then(setTranslations);
   }, [language]);
 
