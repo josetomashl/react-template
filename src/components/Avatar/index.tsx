@@ -10,7 +10,7 @@ type Props = {
   className?: string;
 };
 
-export function Avatar({ src, alt = 'Imagen de perfil', size = 48, className = '' }: Props) {
+export function Avatar({ src, alt = 'Profile image', size = 48, className = '' }: Props) {
   const [imgError, setImgError] = useState(false);
 
   return (
