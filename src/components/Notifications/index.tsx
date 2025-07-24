@@ -1,9 +1,22 @@
 import { Icon, type IconNames } from '@/components/Icon';
+import { useAppSelector } from '@/store';
 import { type NotificationItem, removeNotification } from '@/store/modules/root';
 import { css } from '@/utils';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
+
+export const NotificationsContainer = () => {
+  const notifications = useAppSelector((state) => state.root.notifications);
+
+  return (
+    <div className={styles.notificationsContainer}>
+      {notifications.map((notification) => (
+        <Notification key={notification.id} notification={notification} />
+      ))}
+    </div>
+  );
+};
 
 export function Notification({ notification }: { notification: NotificationItem }) {
   const dispatch = useDispatch();

@@ -1,23 +1,104 @@
 @font-face {
-  font-family: $body-font-family-light;
-  src: url(./assets/fonts/HelveticaNeueLight.otf) format('opentype');
+  font-family: $font-heavy;
+  src: url(./assets/fonts/VisbyHeavy.otf) format('opentype');
   font-style: normal;
+  font-weight: 900;
 }
 @font-face {
-  font-family: $body-font-family;
-  src: url(./assets/fonts/HelveticaNeueRoman.otf) format('opentype');
+  font-family: $font-extrabold;
+  src: url(./assets/fonts/VisbyExtrabold.otf) format('opentype');
   font-style: normal;
+  font-weight: 800;
 }
 @font-face {
-  font-family: $body-font-family-bold;
-  src: url(./assets/fonts/HelveticaNeueBold.otf) format('opentype');
+  font-family: $font-bold;
+  src: url(./assets/fonts/VisbyBold.otf) format('opentype');
   font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: $font-semibold;
+  src: url(./assets/fonts/VisbySemibold.otf) format('opentype');
+  font-style: normal;
+  font-weight: 600;
+}
+@font-face {
+  font-family: $font-medium;
+  src: url(./assets/fonts/VisbyMedium.otf) format('opentype');
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face {
+  font-family: $font-regular;
+  src: url(./assets/fonts/VisbyRegular.otf) format('opentype');
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: $font-light;
+  src: url(./assets/fonts/VisbyLight.otf) format('opentype');
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: $font-thin;
+  src: url(./assets/fonts/VisbyThin.otf) format('opentype');
+  font-style: normal;
+  font-weight: 200;
+}
+// ITALICS
+@font-face {
+  font-family: $font-heavy-italic;
+  src: url(./assets/fonts/VisbyHeavyItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 900;
+}
+@font-face {
+  font-family: $font-extrabold-italic;
+  src: url(./assets/fonts/VisbyExtraboldItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 800;
+}
+@font-face {
+  font-family: $font-bold-italic;
+  src: url(./assets/fonts/VisbyBoldItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 700;
+}
+@font-face {
+  font-family: $font-semibold-italic;
+  src: url(./assets/fonts/VisbySemiboldItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 600;
+}
+@font-face {
+  font-family: $font-medium-italic;
+  src: url(./assets/fonts/VisbyMediumItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 500;
+}
+@font-face {
+  font-family: $font-regular-italic;
+  src: url(./assets/fonts/VisbyRegularItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: $font-light-italic;
+  src: url(./assets/fonts/VisbyLightItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 300;
+}
+@font-face {
+  font-family: $font-thin-italic;
+  src: url(./assets/fonts/VisbyThinItalic.otf) format('opentype');
+  font-style: italic;
+  font-weight: 200;
 }
 
 :root {
-  font-family: $body-font-family, Helvetica, Inter;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: $font-regular, Helvetica, Inter;
+  font-size: 18px;
 
   background-color: $background;
   color: $dark;
@@ -26,6 +107,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
