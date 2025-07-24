@@ -34,7 +34,6 @@ export function Button({
       setTimeout(() => {
         setLoading(false);
       }, 1000);
-      // setLoading(false);
     }
   };
 
