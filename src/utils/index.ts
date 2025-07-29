@@ -44,12 +44,13 @@ export function toPrice(str: number | string, isAbsolute?: boolean): string | nu
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
+    useGrouping: true,
   });
 
   const formatted = formatter.format(numericValue).replace('-', isAbsolute ? '' : '-');
 
-  return formatted.replace('€', '') + '€';
+  return formatted.replace('€', '').trim() + ' €';
 }
 
 /**
@@ -95,7 +96,7 @@ export function toDate(
     MMM: formatWithIntl({ month: 'short' }),
     MMMM: formatWithIntl({ month: 'long' }),
     YY: year.toString().slice(-2),
-    YYYY: year.toString()
+    YYYY: year.toString(),
   };
 
   return format.replace(/MMMM|MMM|MM|M|DD|D|YYYY|YY/g, (match) => replacements[match]);
