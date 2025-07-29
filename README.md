@@ -1,50 +1,67 @@
-# React + TypeScript + Vite
+<h1 align="center">Welcome to my react-template 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <!-- <a href="https://github.com/josetomashl/react-template#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a> -->
+  <a href="https://github.com/josetomashl/react-template/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/josetomashl/react-template/blob/master/LICENSE" target="_blank">
+    <img alt="License: ISC" src="https://img.shields.io/github/license/josetomashl/react-template" />
+  </a>
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Basic template for React + ViteJS applications.
 
-Currently, two official plugins are available:
+### 🏠 [Homepage](https://github.com/josetomashl/react-template#readme)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Install
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```sh
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Start application
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm run dev
 ```
+
+## Build application
+
+```sh
+npm run build
+```
+
+## Run linter
+
+```sh
+npm run lint
+```
+
+## Run tests
+
+```sh
+npm run test
+```
+
+## Author
+
+👤 **José Tomás Hernández López**
+
+- Website: https://www.jthl.dev/
+- Github: [@josetomashl](https://github.com/josetomashl)
+- LinkedIn: [@josetomas-hernandezlopez](https://linkedin.com/in/https://www.linkedin.com/in/josetomas-hernandezlopez/)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/josetomashl/react-template/issues). You can also take a look at the [contributing guide](https://github.com/josetomashl/react-template/blob/master/CONTRIBUTING.md).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2024 [José Tomás Hernández López](https://github.com/josetomashl).<br /> This project is [ISC](https://github.com/josetomashl/react-template/blob/master/LICENSE) licensed.
