@@ -10,7 +10,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   loading: false,
-  me: null,
+  me: null
 };
 
 export const authSlice = createSlice({
@@ -19,7 +19,7 @@ export const authSlice = createSlice({
   reducers: {
     updateMe: (state, action: PayloadAction<User | null>) => {
       state.me = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -50,7 +50,21 @@ export const authSlice = createSlice({
           state.me = action.payload.user;
         }
       });
-  },
+    builder
+      .addCase(requestRefresh.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(requestRefresh.rejected, (state) => {
+        state.loading = false;
+        state.me = null;
+      })
+      .addCase(requestRefresh.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload) {
+          state.me = action.payload.user;
+        }
+      });
+  }
 });
 
 export const { updateMe } = authSlice.actions;
@@ -59,9 +73,8 @@ export const requestLogin = createAsyncThunk('requestLogin', async (payload: Log
   try {
     const response = await axiosInstance.post<LoginRequest, AuthResponse>('/login', payload);
     return response;
-  } catch (e) {
-    console.log('slice err', e);
-    return null;
+  } catch {
+    return;
   }
 });
 export const requestRegister = createAsyncThunk('requestRegister', async (payload: RegisterRequest) => {
@@ -70,17 +83,15 @@ export const requestRegister = createAsyncThunk('requestRegister', async (payloa
     console.log('succ', response);
 
     return response;
-  } catch (e) {
-    console.log('slice err', e);
-    return null;
+  } catch {
+    return;
   }
 });
 export const requestRefresh = createAsyncThunk('requestRefresh', async (payload: RefreshRequest) => {
   try {
     const response = await axiosInstance.post<RefreshRequest, AuthResponse>('/refresh', payload);
     return response;
-  } catch (e) {
-    console.log('slice err', e);
-    return null;
+  } catch {
+    return;
   }
 });

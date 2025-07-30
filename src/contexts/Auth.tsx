@@ -1,4 +1,4 @@
-import type { LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
+import type { AuthResponse, LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
 import { useCookie } from '@/hooks/useCookie';
 import { CookieKeys } from '@/plugins/constants/cookies';
 import { useAppDispatch } from '@/store';
@@ -25,11 +25,10 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const login = async (data: LoginRequest) => {
     const res = await dispatch(requestLogin(data));
-    console.log('Login response auth provider:', res);
-
     if (res.payload) {
-      setToken(res.payload.data.token);
-      setRefreshToken(res.payload.data.refreshToken);
+      const pl = res.payload as { data: AuthResponse };
+      setToken(pl.data.token);
+      setRefreshToken(pl.data.refreshToken);
       navigate('/');
     }
   };
@@ -37,8 +36,9 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const register = async (data: RegisterRequest) => {
     const res = await dispatch(requestRegister(data));
     if (res.payload) {
-      setToken(res.payload.data.token);
-      setRefreshToken(res.payload.data.refreshToken);
+      const pl = res.payload as { data: AuthResponse };
+      setToken(pl.data.token);
+      setRefreshToken(pl.data.refreshToken);
       navigate('/');
     }
   };
@@ -46,16 +46,17 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const refresh = async (data: RefreshRequest) => {
     const res = await dispatch(requestRefresh(data));
     if (res.payload) {
-      setToken(res.payload.data.token);
-      setRefreshToken(res.payload.data.refreshToken);
+      const pl = res.payload as { data: AuthResponse };
+      setToken(pl.data.token);
+      setRefreshToken(pl.data.refreshToken);
       navigate('/');
     }
   };
 
   const logout = () => {
+    dispatch(updateMe(null));
     setToken(null);
     setRefreshToken(null);
-    dispatch(updateMe(null));
   };
 
   return (

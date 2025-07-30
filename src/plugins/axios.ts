@@ -1,3 +1,5 @@
+import { store } from '@/store';
+import { pushNotification } from '@/store/modules/root';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { CookieKeys } from './constants/cookies';
@@ -6,10 +8,10 @@ const axiosInstance = axios.create({
   baseURL: '/api',
   timeout: 5000,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
   responseEncoding: 'utf-8',
-  responseType: 'json',
+  responseType: 'json'
 });
 
 axiosInstance.interceptors.request.use(
@@ -30,26 +32,25 @@ axiosInstance.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    console.log('axios error', error);
-
+    const serverData = error.response.data;
     let message = 'An unexpected error has ocurred.';
     switch (error.response.status) {
       case 400:
-        message = error.response.data;
+        // serverData.data = Object with error messages like: {email: ["Este valor no es una dirección de email válida."]}
+        message = 'Petición no válida. Revisa todos los campos e inténtalo de nuevo.';
         break;
       case 401:
       case 403:
-        // TODO: redirect to logout
-        break;
       case 404:
       case 418:
-        message = error.response.data.data;
+        message = serverData.data.message;
         break;
       case 500:
-      case 504:
-        message = error.response;
+        // message = serverData.error;
+        message = 'Servicio no disponible en estos momentos. Por favor, inténtalo de nuevo más tarde.';
         break;
     }
+    store.dispatch(pushNotification({ type: 'error', message }));
     throw new Error(message);
   }
 );
