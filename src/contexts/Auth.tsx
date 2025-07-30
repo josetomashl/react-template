@@ -1,47 +1,68 @@
-import type { User } from '@/dtos/User';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { createContext, type PropsWithChildren, useEffect, useState } from 'react';
+import type { LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
+import { useCookie } from '@/hooks/useCookie';
+import { CookieKeys } from '@/plugins/constants/cookies';
+import { useAppDispatch } from '@/store';
+import { requestLogin, requestRefresh, requestRegister, updateMe } from '@/store/modules/auth';
+import { createContext, type PropsWithChildren } from 'react';
+import { useNavigate } from 'react-router';
 
 interface AuthContextType {
-  isAuthenticated: boolean;
-  user: User | null;
   token: string | null;
-  login: (user: User, token: string) => void;
+  refreshToken: string | null;
+  login: (data: LoginRequest) => void;
+  register: (data: RegisterRequest) => void;
+  refresh: (data: RefreshRequest) => void;
   logout: () => void;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [session, setSession] = useLocalStorage<{ user: User; token: string }>('USER');
+const AuthProvider = ({ children }: PropsWithChildren) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [token, setToken] = useCookie<string | null>(CookieKeys.USER_TOKEN, null);
+  const [refreshToken, setRefreshToken] = useCookie<string | null>(CookieKeys.USER_REFRESH_TOKEN, null);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<AuthContextType['user']>(null);
-  const [token, setToken] = useState<AuthContextType['token']>(null);
+  const login = async (data: LoginRequest) => {
+    const res = await dispatch(requestLogin(data));
+    console.log('Login response auth provider:', res);
 
-  useEffect(() => {
-    if (session) {
-      login(session.user, session.token);
-    } else {
-      logout();
+    if (res.payload) {
+      setToken(res.payload.data.token);
+      setRefreshToken(res.payload.data.refreshToken);
+      navigate('/');
     }
-  }, [session]);
+  };
 
-  const login = (user: User, token: string) => {
-    setSession({ user, token });
-    setIsAuthenticated(true);
-    setUser(user);
-    setToken(token);
+  const register = async (data: RegisterRequest) => {
+    const res = await dispatch(requestRegister(data));
+    if (res.payload) {
+      setToken(res.payload.data.token);
+      setRefreshToken(res.payload.data.refreshToken);
+      navigate('/');
+    }
+  };
+
+  const refresh = async (data: RefreshRequest) => {
+    const res = await dispatch(requestRefresh(data));
+    if (res.payload) {
+      setToken(res.payload.data.token);
+      setRefreshToken(res.payload.data.refreshToken);
+      navigate('/');
+    }
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
     setToken(null);
+    setRefreshToken(null);
+    dispatch(updateMe(null));
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ token, refreshToken, login, register, refresh, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
+
+export { AuthContext, AuthProvider };

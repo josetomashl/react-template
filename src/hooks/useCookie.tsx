@@ -1,22 +1,21 @@
-import { CookieKeys, type CookieKey } from '@/plugins/constants/cookies';
 import Cookies from 'js-cookie';
 import { useCallback, useState } from 'react';
 
 export function useCookie<T = string>(
-  name: CookieKey,
+  name: string,
   defaultValue?: T
 ): [T | null, (newValue: T | null, options?: Cookies.CookieAttributes) => void] {
   const [cookie, setCookie] = useState<T | null>(() => {
-    const cookieStr = Cookies.get(CookieKeys[name]);
+    const cookieStr = Cookies.get(name);
     if (cookieStr) {
       try {
-        return JSON.parse(cookieStr) as T;
+        const parsedValue = JSON.parse(cookieStr);
+        return parsedValue as T;
       } catch {
-        return defaultValue ?? null;
+        return cookieStr as T;
       }
-    }
-    if (defaultValue) {
-      Cookies.set(CookieKeys[name], JSON.stringify(defaultValue));
+    } else if (defaultValue) {
+      Cookies.set(name, typeof defaultValue === 'string' ? defaultValue : JSON.stringify(defaultValue));
       return defaultValue;
     }
     return null;
@@ -25,12 +24,13 @@ export function useCookie<T = string>(
   const updateCookie = useCallback(
     (newValue: T | null, options?: Cookies.CookieAttributes) => {
       if (newValue) {
-        const newValueStr = typeof newValue === 'string' ? newValue : JSON.stringify(newValue);
-        Cookies.set(CookieKeys[name], newValueStr, options);
+        const parsedValue = typeof newValue === 'string' ? newValue : JSON.stringify(newValue);
+        Cookies.set(name, parsedValue, options);
+        setCookie(parsedValue as T);
       } else {
-        Cookies.remove(CookieKeys[name]);
+        Cookies.remove(name);
+        setCookie(null);
       }
-      setCookie(newValue);
     },
     [name]
   );

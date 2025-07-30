@@ -3,13 +3,13 @@ import Cookies from 'js-cookie';
 import { CookieKeys } from './constants/cookies';
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_API,
+  baseURL: '/api',
   timeout: 5000,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
   responseEncoding: 'utf-8',
-  responseType: 'json'
+  responseType: 'json',
 });
 
 axiosInstance.interceptors.request.use(
@@ -27,9 +27,11 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    return response.data ?? response;
+    return response.data;
   },
   (error) => {
+    console.log('axios error', error);
+
     let message = 'An unexpected error has ocurred.';
     switch (error.response.status) {
       case 400:
@@ -41,14 +43,14 @@ axiosInstance.interceptors.response.use(
         break;
       case 404:
       case 418:
-        message = error.response.data.message;
+        message = error.response.data.data;
         break;
       case 500:
       case 504:
         message = error.response;
         break;
     }
-    return Promise.reject(message);
+    throw new Error(message);
   }
 );
 

@@ -3,10 +3,11 @@ import { Outlet } from 'react-router';
 
 export function DefaultLayout() {
   return (
-    <div style={{ height: '100vh', width: '100vw', overflow: 'hidden' }}>
+    <div id='default_layout'>
       <Sidebar />
-      <Outlet />
-      {/* FOOTER */}
+      <div id='outlet'>
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -1,28 +1,32 @@
-import { type StorageKey, StorageKeys } from '@/plugins/constants/storage';
 import { useState } from 'react';
 
-export function useLocalStorage<T = string>(key: StorageKey, defaultValue?: T): [T | null, (value: T) => void] {
+export function useLocalStorage<T = string>(key: string, defaultValue?: T): [T | null, (value: T) => void] {
   const [storedValue, setStoredValue] = useState<T | null>(() => {
-    try {
-      const value = window.localStorage.getItem(StorageKeys[key]);
-      if (value) {
-        return JSON.parse(value);
-      } else {
-        window.localStorage.setItem(StorageKeys[key], JSON.stringify(defaultValue ?? null));
-        return defaultValue ?? null;
+    const value = window.localStorage.getItem(key);
+    if (value) {
+      try {
+        const parsedValue = JSON.parse(value);
+        return parsedValue;
+      } catch {
+        return value;
       }
-    } catch {
+    } else {
       return defaultValue ?? null;
     }
   });
 
-  const setValue = (newValue: T) => {
-    try {
-      setStoredValue(newValue);
-      window.localStorage.setItem(StorageKeys[key], JSON.stringify(newValue));
-    } catch {
-      setStoredValue(defaultValue ?? null);
-      window.localStorage.setItem(StorageKeys[key], JSON.stringify(defaultValue ?? null));
+  const setValue = (newValue: T | null) => {
+    if (newValue) {
+      try {
+        setStoredValue(newValue);
+        window.localStorage.setItem(key, typeof newValue === 'string' ? newValue : JSON.stringify(newValue));
+      } catch {
+        setStoredValue(defaultValue ?? null);
+        window.localStorage.setItem(key, JSON.stringify(defaultValue ?? null));
+      }
+    } else {
+      setStoredValue(null);
+      window.localStorage.removeItem(key);
     }
   };
 
