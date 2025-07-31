@@ -28,12 +28,6 @@ npm install
 npm run dev
 ```
 
-## Build application
-
-```sh
-npm run build
-```
-
 ## Run linter
 
 ```sh
@@ -46,11 +40,31 @@ npm run lint
 npm run test
 ```
 
+## Build application
+
+```sh
+npm run build
+```
+
+## Usage
+
+Feel free to customize your own implementation of each component or configuration. I recommend having a look to every file to understand the basics of this template and how it works, and then, make all necessary changes.
+
+### What to do now?
+
+Go find the following files to make this work for you and match you requirements:
+
+- Env vars: `.env` & `.env.development`
+- Axios instance configuration: `/src/plugins/axios.ts`
+- App router: `/src/routes/index.tsx`
+- Predefined constants: `/src/plugins/constants/*.ts`
+- Customize your assets: `/src/assets/**/*.*`
+
 ## Author
 
 👤 **José Tomás Hernández López**
 
-- Website: https://www.jthl.dev/
+- Website: https://josetomashl.github.io/
 - Github: [@josetomashl](https://github.com/josetomashl)
 - LinkedIn: [@josetomas-hernandezlopez](https://linkedin.com/in/https://www.linkedin.com/in/josetomas-hernandezlopez/)
 

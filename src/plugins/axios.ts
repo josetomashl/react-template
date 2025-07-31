@@ -14,7 +14,7 @@ export type BaseResponse<T = null> = {
 
 const axiosInstance = axios.create({
   baseURL: '/api',
-  timeout: 5000,
+  timeout: 3000,
   headers: {
     'Content-Type': 'application/json'
   },
@@ -26,7 +26,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token = Cookies.get(CookieKeys.USER_TOKEN);
     if (token) {
-      config.headers.Token = token;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
