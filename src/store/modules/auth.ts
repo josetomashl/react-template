@@ -1,6 +1,6 @@
 import type { AuthResponse, LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
 import type { User } from '@/dtos/User';
-import axiosInstance from '@/plugins/axios';
+import axiosInstance, { BaseResponse } from '@/plugins/axios';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
       .addCase(requestLogin.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload) {
-          state.me = action.payload.user;
+          state.me = action.payload.customer;
         }
       });
     builder
@@ -47,7 +47,7 @@ export const authSlice = createSlice({
       .addCase(requestRegister.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload) {
-          state.me = action.payload.user;
+          state.me = action.payload.customer;
         }
       });
     builder
@@ -61,7 +61,7 @@ export const authSlice = createSlice({
       .addCase(requestRefresh.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload) {
-          state.me = action.payload.user;
+          state.me = action.payload.customer;
         }
       });
   }
@@ -71,26 +71,24 @@ export const { updateMe } = authSlice.actions;
 
 export const requestLogin = createAsyncThunk('requestLogin', async (payload: LoginRequest) => {
   try {
-    const response = await axiosInstance.post<LoginRequest, AuthResponse>('/login', payload);
-    return response;
+    const response = await axiosInstance.post<LoginRequest, BaseResponse<AuthResponse>>('/login', payload);
+    return response.data;
   } catch {
     return;
   }
 });
 export const requestRegister = createAsyncThunk('requestRegister', async (payload: RegisterRequest) => {
   try {
-    const response = await axiosInstance.post<RegisterRequest, AuthResponse>('/register', payload);
-    console.log('succ', response);
-
-    return response;
+    const response = await axiosInstance.post<RegisterRequest, BaseResponse<AuthResponse>>('/register', payload);
+    return response.data;
   } catch {
     return;
   }
 });
 export const requestRefresh = createAsyncThunk('requestRefresh', async (payload: RefreshRequest) => {
   try {
-    const response = await axiosInstance.post<RefreshRequest, AuthResponse>('/refresh', payload);
-    return response;
+    const response = await axiosInstance.post<RefreshRequest, BaseResponse<AuthResponse>>('/refresh', payload);
+    return response.data;
   } catch {
     return;
   }

@@ -26,9 +26,9 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const login = async (data: LoginRequest) => {
     const res = await dispatch(requestLogin(data));
     if (res.payload) {
-      const pl = res.payload as { data: AuthResponse };
-      setToken(pl.data.token);
-      setRefreshToken(pl.data.refreshToken);
+      const pl = res.payload as AuthResponse;
+      setToken(pl.token);
+      setRefreshToken(pl.refreshToken);
       navigate('/');
     }
   };
@@ -36,9 +36,9 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const register = async (data: RegisterRequest) => {
     const res = await dispatch(requestRegister(data));
     if (res.payload) {
-      const pl = res.payload as { data: AuthResponse };
-      setToken(pl.data.token);
-      setRefreshToken(pl.data.refreshToken);
+      const pl = res.payload as AuthResponse;
+      setToken(pl.token);
+      setRefreshToken(pl.refreshToken);
       navigate('/');
     }
   };
@@ -46,9 +46,9 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const refresh = async (data: RefreshRequest) => {
     const res = await dispatch(requestRefresh(data));
     if (res.payload) {
-      const pl = res.payload as { data: AuthResponse };
-      setToken(pl.data.token);
-      setRefreshToken(pl.data.refreshToken);
+      const pl = res.payload as AuthResponse;
+      setToken(pl.token);
+      setRefreshToken(pl.refreshToken);
       navigate('/');
     }
   };

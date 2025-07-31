@@ -4,6 +4,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { CookieKeys } from './constants/cookies';
 
+export type BaseResponse<T = null> = {
+  data: T;
+  requestId: string;
+  commons: {
+    notifications_unread: number;
+  };
+};
+
 const axiosInstance = axios.create({
   baseURL: '/api',
   timeout: 5000,
