@@ -1,8 +1,8 @@
 .sidebar {
-  width: 260px;
+  width: $sidebar-width;
   background: #1f2937;
   color: #fff;
-  height: 100vh;
+  height: 100dvh;
   padding: 10px;
   user-select: none;
 }
@@ -24,10 +24,10 @@
   text-decoration: none;
   color: inherit;
   border-radius: 4px;
-}
 
-.sidebarLink.active {
-  background-color: #374151;
+  &.active {
+    background-color: #374151;
+  }
 }
 
 .sidebarChildren {
@@ -36,9 +36,10 @@
   overflow: hidden;
   opacity: 0;
   transition: all 0.5s;
-}
-.sidebarChildren.open {
-  height: calc-size(auto, size);
-  overflow: visible;
-  opacity: 1;
+
+  &.open {
+    height: calc-size(auto, size);
+    overflow: visible;
+    opacity: 1;
+  }
 }
