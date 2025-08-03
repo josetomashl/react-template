@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     const serverData = error.response.data;
-    let message = 'An unexpected error has ocurred.';
+    let message = '';
     switch (error.response.status) {
       case 400:
         // serverData.data = Object with error messages like: {email: ["Este valor no es una dirección de email válida."]}
