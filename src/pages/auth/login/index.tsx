@@ -1,3 +1,4 @@
+import { Input } from '@/components/Input';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
 import { useAppSelector } from '@/store';
@@ -11,7 +12,7 @@ export function LoginPage() {
 
   const [form, setForm] = useState({
     email: '',
-    password: '',
+    password: ''
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -35,6 +36,21 @@ export function LoginPage() {
           value={form.password}
           onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
         />
+
+        <Input
+          type='email'
+          label='Email'
+          value={form.email}
+          onChange={(value) => setForm((prev) => ({ ...prev, email: value }))}
+          clearable
+        />
+        <Input
+          type='password'
+          value={form.password}
+          label='Password'
+          onChange={(value) => setForm((prev) => ({ ...prev, password: value }))}
+        />
+
         <button type='reset'>Clear</button>
         <button type='submit' disabled={auth.loading}>
           Login
