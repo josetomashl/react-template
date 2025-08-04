@@ -10,11 +10,7 @@ interface ContextProps {
   trans: (key: string, args?: Translations) => string;
 }
 
-const LanguageContext = createContext<ContextProps>({
-  language: null,
-  trans: () => 'Not translated',
-  setLanguage: () => undefined
-});
+const LanguageContext = createContext<ContextProps | null>(null);
 
 const LanguageProvider = (props: PropsWithChildren) => {
   // Determine the default language from the browser or user system
