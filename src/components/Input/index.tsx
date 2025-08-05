@@ -6,7 +6,6 @@ import styles from './styles.module.scss';
 interface Props {
   type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'range' | 'date';
   label?: string;
-  placeholder?: string;
   value: string;
   onChange: (value: string, valid: boolean) => void;
   disabled?: boolean;
