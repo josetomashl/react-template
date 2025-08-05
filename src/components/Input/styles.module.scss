@@ -1,47 +1,67 @@
-.container {
-  position: relative;
-  display: inline-block;
-  height: 40px;
-  border: 1.5px solid $gray;
-  border-radius: 6px;
-  padding: 4px;
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0;
 
-  .inputContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-    min-width: 220px;
-    max-width: 100%;
-    max-height: 100%;
+  .container {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    border: 1.5px solid $gray;
+    border-radius: 6px;
+    padding: 4px;
 
-    .input {
-      flex-grow: 1;
-      height: 100%;
-      padding: 10px 6px;
-      border: none;
-      outline: none;
-      background-color: $background;
+    &.focused {
+      border-color: $primary;
+    }
+    &.error {
+      border-color: $error;
     }
 
-    .iconContainer {
-      padding-right: 4px;
-      cursor: pointer;
+    .inputContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+      min-width: 220px;
+      max-width: 100%;
+      max-height: 100%;
+
+      .input {
+        flex-grow: 1;
+        height: 100%;
+        padding: 10px 6px;
+        border: none;
+        outline: none;
+        background-color: $background;
+      }
+
+      .iconContainer {
+        padding-right: 4px;
+        cursor: pointer;
+      }
+    }
+
+    .label {
+      position: absolute;
+      top: 10px;
+      left: 6px;
+      background-color: $background;
+      transition: all 0.2s ease;
+
+      &.floating {
+        font-size: 12px;
+        padding: 0 4px;
+        // top: 50%;
+        transform: translateY(calc(-50% - 10px));
+      }
     }
   }
 
-  .label {
-    position: absolute;
-    top: 10px;
-    left: 6px;
-    background-color: $background;
-    transition: all 0.2s ease;
-
-    &.floating {
-      font-size: 12px;
-      padding: 0 4px;
-      // top: 50%;
-      transform: translateY(calc(-50% - 10px));
-    }
+  .errorMessage {
+    display: block;
+    color: $error;
+    font-size: 12px;
+    margin-top: 4px;
   }
 }

@@ -1,5 +1,5 @@
 import { css } from '@/utils';
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { Icon } from '../Icon';
 import styles from './styles.module.scss';
 
@@ -8,63 +8,90 @@ interface Props {
   label?: string;
   placeholder?: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, valid: boolean) => void;
   disabled?: boolean;
   required?: boolean;
   clearable?: boolean;
+  regExp?: RegExp;
+  errorMessage?: string;
 }
 
-// TODO: Check if required to show error message 'This field is required' or custom text & red color
 export function Input({
   type = 'text',
   label,
   value,
   onChange,
-  disabled = false,
-  required = false,
-  clearable = false
+  disabled,
+  required,
+  clearable,
+  regExp,
+  errorMessage = 'This field is required'
 }: Props) {
   const id = useId();
+  const [isTouched, setIsTouched] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  useEffect(() => {
+    setIsValid(checkValidity(value));
+  }, [value]);
 
-  const handleChange = (value: string) => {
+  const [isValueVisible, setIsValueVisible] = useState(false);
+  const toggleVisibility = () => setIsValueVisible((prev) => !prev);
+
+  const handleChange = (v: string) => {
     if (!disabled && onChange) {
-      onChange(value);
+      if (!isTouched) {
+        setIsTouched(true);
+      }
+      onChange(v, checkValidity(v));
+    }
+  };
+
+  const checkValidity = (v: string) => {
+    if (!v && required) {
+      return false;
+    } else if (regExp) {
+      return regExp.test(v);
+    } else {
+      return true;
     }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.inputContainer}>
-        <input
-          type={type === 'password' ? (!isPasswordVisible ? 'password' : 'text') : type}
-          id={id}
-          value={value}
-          onChange={(e) => handleChange(e.target.value)}
-          disabled={disabled}
-          required={required}
-          className={styles.input}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-        />
-        {type === 'password' && (
-          <div className={styles.iconContainer} onClick={() => setIsPasswordVisible((prev) => !prev)}>
-            <Icon name={isPasswordVisible ? 'chevronLeft' : 'chevronRight'} size={16} color='black' />
-          </div>
-        )}
-        {clearable && value && (
-          <div className={styles.iconContainer} onClick={() => handleChange('')}>
-            <Icon name='circleX' size={16} color='black' />
-          </div>
+    <div className={styles.inputWrapper}>
+      <div
+        className={css(styles.container, isFocused ? styles.focused : '', !isValid && isTouched ? styles.error : '')}>
+        <div className={styles.inputContainer}>
+          <input
+            type={type === 'password' ? (!isValueVisible ? 'password' : 'text') : type}
+            id={id}
+            value={value}
+            onChange={(e) => handleChange(e.target.value)}
+            disabled={disabled}
+            required={required}
+            className={styles.input}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
+          {type === 'password' && (
+            <div className={styles.iconContainer} onClick={toggleVisibility}>
+              <Icon name={isValueVisible ? 'chevronLeft' : 'chevronRight'} size={16} color='black' />
+            </div>
+          )}
+          {clearable && value && (
+            <div className={styles.iconContainer} onClick={() => handleChange('')}>
+              <Icon name='circleX' size={16} color='black' />
+            </div>
+          )}
+        </div>
+        {label && (
+          <label htmlFor={id} className={css(styles.label, !!value || isFocused ? styles.floating : '')}>
+            {label}
+          </label>
         )}
       </div>
-      {label && (
-        <label htmlFor={id} className={css(styles.label, !!value || isFocused ? styles.floating : '')}>
-          {label}
-        </label>
-      )}
+      <span className={styles.errorMessage}>{isTouched && !isValid ? errorMessage : ''}</span>
     </div>
   );
 }
