@@ -1,0 +1,101 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0;
+
+  .container {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    border: 1.5px solid $gray;
+    border-radius: 6px;
+    padding: 4px;
+
+    &.focused {
+      border-color: $primary;
+    }
+    &.error {
+      border-color: $error;
+    }
+
+    .inputContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+      min-width: 220px;
+      max-width: 100%;
+      max-height: 100%;
+
+      .input {
+        flex-grow: 1;
+        height: 100%;
+        padding: 10px 6px;
+        border: none;
+        outline: none;
+        background-color: $background;
+      }
+
+      .iconsContainer {
+        display: flex;
+        align-items: center;
+        .icon {
+          padding-right: 4px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .label {
+      position: absolute;
+      top: 10px;
+      left: 6px;
+      background-color: $background;
+      transition: all 0.2s ease;
+
+      &.floating {
+        font-size: 12px;
+        padding: 0 4px;
+        // top: 50%;
+        transform: translateY(calc(-50% - 10px));
+      }
+    }
+  }
+
+  .errorMessage {
+    display: block;
+    color: $error;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .dropdownContainer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 6px;
+    border-radius: 6px;
+
+    .dropdownList {
+      display: flex;
+      flex-direction: column;
+      background-color: $light;
+
+      .dropdownItem {
+        padding: 8px 12px;
+        cursor: pointer;
+
+        &.borderTop {
+          border-top: 1px solid $dark;
+        }
+        &:hover {
+          background-color: $gray;
+        }
+        &.selected {
+          background-color: $gray;
+        }
+      }
+    }
+  }
+}
