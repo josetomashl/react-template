@@ -7,17 +7,19 @@ export interface DropdownItem {
   label: string;
   value: string;
 }
+type SingleValue = DropdownItem | null;
+type MultipleValue = DropdownItem[];
+type DropdownValue = SingleValue | MultipleValue;
 
 interface Props {
   label?: string;
   items: DropdownItem[];
-  value: DropdownItem | null;
-  onChange: (value: DropdownItem | null) => void;
+  value: DropdownValue;
+  onChange: (value: DropdownValue) => void;
   disabled?: boolean;
   required?: boolean;
   clearable?: boolean;
-  multiple?: boolean; // TODO
-  search?: boolean; // TODO
+  multiple?: boolean;
 }
 
 export function Dropdown({
@@ -28,14 +30,15 @@ export function Dropdown({
   disabled,
   required,
   clearable,
-  multiple,
-  search
+  multiple
 }: Props) {
   const [isTouched, setIsTouched] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
-    setIsOpen((prev) => !prev);
+    if (!disabled) {
+      setIsOpen((prev) => !prev);
+    }
   };
 
   const handleChange = (v: DropdownItem | null) => {
