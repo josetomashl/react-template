@@ -2,7 +2,7 @@ import '@/assets/styles/main.scss';
 import '@/assets/styles/reset.scss';
 import { NotificationsContainer } from '@/components/Notifications';
 import { AuthProvider } from '@/contexts/authContext';
-import { LanguageProvider } from '@/contexts/translationContext';
+import { TranslationProvider } from '@/contexts/translationContext';
 import { AppRoutes } from '@/routes';
 import { store } from '@/store';
 import { StrictMode } from 'react';
@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <LanguageProvider>
+    <TranslationProvider>
       <BrowserRouter>
         <Provider store={store}>
           <AuthProvider>
@@ -21,6 +21,6 @@ createRoot(document.getElementById('root')!).render(
           <NotificationsContainer />
         </Provider>
       </BrowserRouter>
-    </LanguageProvider>
+    </TranslationProvider>
   </StrictMode>
 );
