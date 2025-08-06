@@ -67,6 +67,7 @@
     color: $error;
     font-size: 12px;
     margin-top: 4px;
+    margin-left: 2px;
   }
 
   .dropdownContainer {
@@ -94,6 +95,11 @@
         }
         &.selected {
           background-color: $gray;
+        }
+
+        > .checkbox {
+          margin-right: 8px;
+          vertical-align: middle;
         }
       }
     }
