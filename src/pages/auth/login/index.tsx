@@ -23,7 +23,7 @@ export function LoginPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(form);
+    login({ email: form.email, password: form.password });
   };
 
   return (
@@ -61,7 +61,6 @@ export function LoginPage() {
           errorMessage='Password must be at least 8 characters long and contain at least one number, one uppercase letter and one lowercase letter'
         />
 
-        <button type='reset'>Clear</button>
         <button type='submit' disabled={auth.loading || form.errors.length > 0}>
           Login
         </button>
