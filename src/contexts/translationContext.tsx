@@ -10,9 +10,9 @@ interface ContextProps {
   trans: (key: string, args?: Translations) => string;
 }
 
-const LanguageContext = createContext<ContextProps | null>(null);
+const TranslationContext = createContext<ContextProps | null>(null);
 
-const LanguageProvider = (props: PropsWithChildren) => {
+const TranslationProvider = (props: PropsWithChildren) => {
   // Determine the default language from the browser or user system
   const defaultLanguage = (navigator.language.split('-')[0] as LocaleType) || 'en';
 
@@ -38,18 +38,18 @@ const LanguageProvider = (props: PropsWithChildren) => {
   );
 
   return (
-    <LanguageContext.Provider
+    <TranslationContext.Provider
       value={{
         language,
         setLanguage,
         trans
       }}>
       {props.children}
-    </LanguageContext.Provider>
+    </TranslationContext.Provider>
   );
 };
 
-export { LanguageContext, LanguageProvider };
+export { TranslationContext, TranslationProvider };
 
 /**
  * Asynchronously loads translation data for the specified language.
