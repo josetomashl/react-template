@@ -1,5 +1,7 @@
+import { Input } from '@/components/Input';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
+import { RegExp } from '@/plugins/constants/regExp';
 import { useAppSelector } from '@/store';
 import { FormEvent, useState } from 'react';
 import styles from './styles.module.scss';
@@ -9,34 +11,57 @@ export function LoginPage() {
   const auth = useAppSelector((state) => state.auth);
   const { login } = useAuth();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    email: string;
+    password: string;
+    errors: string[];
+  }>({
     email: '',
     password: '',
+    errors: []
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(form);
+    login({ email: form.email, password: form.password });
   };
 
   return (
     <div>
       <p className={styles.something}>Login page</p>
       <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='Email'
+        <Input
+          type='email'
+          label='Email'
           value={form.email}
-          onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+          onChange={(value, valid) => {
+            setForm((prev) => ({
+              ...prev,
+              email: value,
+              errors: !valid ? [...prev.errors, 'email'] : prev.errors.filter((e) => e !== 'email')
+            }));
+          }}
+          regExp={RegExp.email}
+          errorMessage='Please enter a valid email address'
+          required
         />
-        <input
+        <Input
           type='password'
-          placeholder='Password'
           value={form.password}
-          onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }))}
+          label='Password'
+          onChange={(value, valid) => {
+            setForm((prev) => ({
+              ...prev,
+              password: value,
+              errors: !valid ? [...prev.errors, 'email'] : prev.errors.filter((e) => e !== 'email')
+            }));
+          }}
+          required
+          regExp={RegExp.password}
+          errorMessage='Password must be at least 8 characters long and contain at least one number, one uppercase letter and one lowercase letter'
         />
-        <button type='reset'>Clear</button>
-        <button type='submit' disabled={auth.loading}>
+
+        <button type='submit' disabled={auth.loading || form.errors.length > 0}>
           Login
         </button>
       </form>

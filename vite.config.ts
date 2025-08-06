@@ -10,12 +10,12 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
-      },
+        '@': path.resolve(__dirname, './src')
+      }
     },
     build: {
       outDir: 'dist',
-      manifest: true,
+      manifest: true
     },
     css: {
       preprocessorOptions: {
@@ -23,17 +23,17 @@ export default defineConfig(({ mode }) => {
           additionalData: `
         @use "@/assets/styles/variables" as *;
         @use "@/assets/styles/mixins" as *;
-        `,
-        },
-      },
+        `
+        }
+      }
     },
     server: {
       proxy: {
         '/api': {
           target: env.VITE_SERVER_API,
-          changeOrigin: true,
-        },
-      },
-    },
+          changeOrigin: true
+        }
+      }
+    }
   };
 });
