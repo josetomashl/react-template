@@ -8,7 +8,7 @@ type Props = {
   fill?: string | 'none';
 };
 
-export function Icon({ name, size = 24, color = '#fff', fill = 'none' }: Props) {
+export function Icon({ name, size = 24, color = '#272727', fill = 'none' }: Props) {
   if (!name || !ICONS[name]) {
     console.warn(`Icon "${name}" not found.`);
     return null;

@@ -1,11 +1,11 @@
 import type { AuthResponse, LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
-import type { User } from '@/dtos/User';
-import axiosInstance, { BaseResponse } from '@/plugins/axios';
+import type { UserItem } from '@/dtos/User';
+import axiosInstance, { type BaseResponse } from '@/plugins/axios';
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   loading: boolean;
-  me: User | null;
+  me: UserItem | null;
 }
 
 const initialState: AuthState = {
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateMe: (state, action: PayloadAction<User | null>) => {
+    updateMe: (state, action: PayloadAction<UserItem | null>) => {
       state.me = action.payload;
     }
   },
@@ -27,42 +27,42 @@ export const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(requestLogin.rejected, (state) => {
-        state.loading = false;
         state.me = null;
+        state.loading = false;
       })
       .addCase(requestLogin.fulfilled, (state, action) => {
-        state.loading = false;
         if (action.payload) {
           state.me = action.payload.customer;
         }
+        state.loading = false;
       });
     builder
       .addCase(requestRegister.pending, (state) => {
         state.loading = true;
       })
       .addCase(requestRegister.rejected, (state) => {
-        state.loading = false;
         state.me = null;
+        state.loading = false;
       })
       .addCase(requestRegister.fulfilled, (state, action) => {
-        state.loading = false;
         if (action.payload) {
           state.me = action.payload.customer;
         }
+        state.loading = false;
       });
     builder
       .addCase(requestRefresh.pending, (state) => {
         state.loading = true;
       })
       .addCase(requestRefresh.rejected, (state) => {
-        state.loading = false;
         state.me = null;
+        state.loading = false;
       })
       .addCase(requestRefresh.fulfilled, (state, action) => {
-        state.loading = false;
         if (action.payload) {
           state.me = action.payload.customer;
         }
+        state.loading = false;
       });
   }
 });

@@ -1,4 +1,5 @@
 import { Input } from '@/components/Input';
+import { Table } from '@/components/Table';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
 import { RegExp } from '@/plugins/constants/regExp';
@@ -65,6 +66,16 @@ export function LoginPage() {
           Login
         </button>
       </form>
+
+      <Table
+        module='user'
+        headers={[
+          { key: 'email', label: 'Email' },
+          { key: 'password', label: 'Password' },
+          { key: 'other', label: 'Other' },
+          { key: 'actions', label: '' }
+        ]}
+      />
     </div>
   );
 }

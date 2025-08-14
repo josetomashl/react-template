@@ -1,0 +1,47 @@
+.table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+
+  thead {
+    font-family: $font-medium;
+
+    tr {
+      border-bottom: 1.5px solid $dark;
+      background-color: $light;
+    }
+
+    th {
+      text-align: left;
+    }
+  }
+
+  tbody {
+    font-size: 14px;
+
+    tr {
+      border-bottom: 1px solid $gray;
+    }
+
+    tr:nth-child(odd) {
+      background-color: $background;
+    }
+    tr:nth-child(even) {
+      background-color: $light;
+    }
+  }
+
+  th,
+  td {
+    padding: 0.6em;
+    min-width: 80px;
+  }
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1em 0;
+  gap: 10px;
+}
