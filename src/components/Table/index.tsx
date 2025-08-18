@@ -30,7 +30,7 @@ export function Table(props: Props) {
     };
   }, [pageSize, page]);
 
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const totalPages = Math.ceil(total / pageSize);
   const canPrev = page > 0;
   const canNext = page < totalPages - 1;
 
@@ -44,8 +44,8 @@ export function Table(props: Props) {
     dispatch(setPageSize(p));
   };
 
-  const handlePrev = () => handlePageChange(clamp(page - 1, 0, totalPages - 1));
-  const handleNext = () => handlePageChange(clamp(page + 1, 0, totalPages - 1));
+  const handlePrev = () => handlePageChange(Math.max(page - 1, 0));
+  const handleNext = () => handlePageChange(Math.min(page + 1, totalPages - 1));
 
   if (userModule.loading) {
     return <Spinner />;
@@ -119,8 +119,4 @@ export function Table(props: Props) {
       </div>
     </div>
   );
-}
-
-function clamp(n: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, n));
 }
