@@ -40,8 +40,8 @@
 
 .paginationContainer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  padding: 1em 0;
+  padding: 0.75em;
   gap: 10px;
 }

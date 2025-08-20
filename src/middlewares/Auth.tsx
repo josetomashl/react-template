@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import { Navigate, Outlet } from 'react-router';
 
-export function AuthLayout() {
+export function AuthMiddleware() {
   const { token } = useAuth();
 
   if (!token) {

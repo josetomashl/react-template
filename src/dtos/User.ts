@@ -10,7 +10,10 @@ export type UserList = UserKV & {
 export type UserItem = UserList & {
   name: string;
   surname: string;
+  role: UserRoles;
   // ...
   created_at: string;
   updated_at: string;
 };
+
+export type UserRoles = 'SUPER' | 'ADMIN' | 'USER';

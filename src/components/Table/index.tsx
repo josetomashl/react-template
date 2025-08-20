@@ -1,53 +1,36 @@
-import { useAppDispatch, useAppSelector } from '@/store';
-import { setPage, setPageSize } from '@/store/modules/user';
-import { useLayoutEffect } from 'react';
+import { useAppSelector } from '@/store';
 import { Icon } from '../Icon';
 import { Spinner } from '../Spinner';
 import styles from './styles.module.scss';
 
 type HeaderItem = { key: string; label: string };
-// type TableItem = Record<string, ReactNode>;
 
 type Props = {
   headers: HeaderItem[];
-  // items: TableItem[];
   module: 'user';
+  onPageChange: (page: number) => Promise<void> | void;
+  onPageSizeChange: (pageSize: number) => Promise<void> | void;
 };
 
 export function Table(props: Props) {
-  const dispatch = useAppDispatch();
-  const userModule = useAppSelector((state) => state[props.module]);
-  const { page, pageSize, total } = userModule.pagination;
-
-  useLayoutEffect(() => {
-    // add debounce fn
-    const handler = setTimeout(() => {
-      console.log(page, pageSize);
-    }, 100);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [pageSize, page]);
+  const module = useAppSelector((state) => state[props.module]);
+  const { page, pageSize, total } = module.pagination;
 
   const totalPages = Math.ceil(total / pageSize);
   const canPrev = page > 0;
   const canNext = page < totalPages - 1;
 
-  const from = total === 0 ? 0 : page * pageSize + 1;
-  const to = Math.min(total, (page + 1) * pageSize);
-
   const handlePageChange = (p: number) => {
-    dispatch(setPage(p));
+    props.onPageChange(p);
   };
   const handlePageSizeChange = (p: number) => {
-    dispatch(setPageSize(p));
+    props.onPageSizeChange(p);
   };
 
   const handlePrev = () => handlePageChange(Math.max(page - 1, 0));
   const handleNext = () => handlePageChange(Math.min(page + 1, totalPages - 1));
 
-  if (userModule.loading) {
+  if (module.loading) {
     return <Spinner />;
   }
 
@@ -62,7 +45,7 @@ export function Table(props: Props) {
           </tr>
         </thead>
         <tbody>
-          {userModule.list.map((row, rowIndex) => (
+          {module.list.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {props.headers.map((header, headerIndex) => (
                 <td key={headerIndex}>
@@ -82,31 +65,25 @@ export function Table(props: Props) {
         </tbody>
       </table>
       <div className={styles.paginationContainer}>
-        <div className='tbl-page-buttons'>
-          <button className='tbl-btn' onClick={() => handlePageChange(0)} disabled={!canPrev} aria-label='First page'>
+        <span>{total} entries</span>
+        <div>
+          <button onClick={() => handlePageChange(0)} disabled={!canPrev} aria-label='First page'>
             «
           </button>
-          <button className='tbl-btn' onClick={handlePrev} disabled={!canPrev} aria-label='Previous page'>
+          <button onClick={handlePrev} disabled={!canPrev} aria-label='Previous page'>
             <Icon name='chevronLeft' size={14} />
           </button>
           <span className='tbl-page-info'>
             Page {totalPages === 0 ? 0 : page + 1} of {totalPages}
           </span>
-          <button className='tbl-btn' onClick={handleNext} disabled={!canNext} aria-label='Next page'>
+          <button onClick={handleNext} disabled={!canNext} aria-label='Next page'>
             <Icon name='chevronRight' size={14} />
           </button>
-          <button
-            className='tbl-btn'
-            onClick={() => handlePageChange(totalPages - 1)}
-            disabled={!canNext}
-            aria-label='Last page'>
+          <button onClick={() => handlePageChange(totalPages - 1)} disabled={!canNext} aria-label='Last page'>
             »
           </button>
-          <span className='tbl-range'>
-            {from}-{to} of {total}
-          </span>
         </div>
-        <div className='tbl-page-size'>
+        <div>
           <label>
             Rows:{' '}
             <select value={pageSize} onChange={(e) => handlePageSizeChange(Number(e.target.value))}>

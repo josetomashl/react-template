@@ -3,12 +3,15 @@ import { Table } from '@/components/Table';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
 import { RegExp } from '@/plugins/constants/regExp';
-import { useAppSelector } from '@/store';
-import { FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { requestUsers, setPage, setPageSize } from '@/store/modules/user';
+import { FormEvent, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 export function LoginPage() {
   useTitle('Login page');
+  const dispatch = useAppDispatch();
+  const { pagination } = useAppSelector((state) => state.user);
   const auth = useAppSelector((state) => state.auth);
   const { login } = useAuth();
 
@@ -26,6 +29,17 @@ export function LoginPage() {
     e.preventDefault();
     login({ email: form.email, password: form.password });
   };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      console.log(pagination);
+      dispatch(requestUsers(pagination));
+    }, 100);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [pagination]);
 
   return (
     <div>
@@ -75,6 +89,12 @@ export function LoginPage() {
           { key: 'other', label: 'Other' },
           { key: 'actions', label: '' }
         ]}
+        onPageChange={(p) => {
+          dispatch(setPage(p));
+        }}
+        onPageSizeChange={(p) => {
+          dispatch(setPageSize(p));
+        }}
       />
     </div>
   );

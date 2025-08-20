@@ -10,17 +10,17 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <TranslationProvider>
-      <BrowserRouter>
-        <Provider store={store}>
+    <BrowserRouter>
+      <Provider store={store}>
+        <TranslationProvider>
           <AuthProvider>
             <AppRoutes />
           </AuthProvider>
           <NotificationsContainer />
-        </Provider>
-      </BrowserRouter>
-    </TranslationProvider>
+        </TranslationProvider>
+      </Provider>
+    </BrowserRouter>
   </StrictMode>
 );

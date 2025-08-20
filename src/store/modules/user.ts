@@ -89,9 +89,14 @@ export const userSlice = createSlice({
 
 export const { resetUsers, setPage, setPageSize } = userSlice.actions;
 
-export const requestUsers = createAsyncThunk('requestUsers', async () => {
+export const requestUsers = createAsyncThunk('requestUsers', async (data: { page: number; pageSize: number }) => {
   try {
-    const response = await axiosInstance.get<undefined, BaseResponse<Pagination<UserList>>>('/users');
+    const response = await axiosInstance.get<undefined, BaseResponse<Pagination<UserList>>>('/users', {
+      params: {
+        page: data.page,
+        pageSize: data.pageSize
+      }
+    });
     return response.data;
   } catch {
     return;
