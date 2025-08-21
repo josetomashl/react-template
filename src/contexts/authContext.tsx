@@ -2,7 +2,7 @@ import type { AuthResponse, LoginRequest, RefreshRequest, RegisterRequest } from
 import { useCookie } from '@/hooks/useCookie';
 import { CookieKeys } from '@/plugins/constants/cookies';
 import { useAppDispatch } from '@/store';
-import { requestLogin, requestRefresh, requestRegister, updateMe } from '@/store/modules/auth';
+import { requestLogin, requestRefresh, requestRegister, resetMe } from '@/store/modules/auth';
 import { createContext, type PropsWithChildren } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   const logout = () => {
-    dispatch(updateMe(null));
+    dispatch(resetMe());
     setToken(null);
     setRefreshToken(null);
   };

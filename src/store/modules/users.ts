@@ -1,9 +1,11 @@
 import type { Pagination } from '@/dtos';
 import type { UserItem, UserList } from '@/dtos/User';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createAppAsyncThunk } from '..';
+import { resetMe } from './auth';
 
-interface UserState {
+interface UsersState {
   loading: boolean;
   list: UserList[];
   item: UserItem | null;
@@ -14,7 +16,7 @@ interface UserState {
   };
 }
 
-const initialState: UserState = {
+const initialState: UsersState = {
   loading: false,
   list: [],
   item: null,
@@ -25,16 +27,10 @@ const initialState: UserState = {
   }
 };
 
-export const userSlice = createSlice({
-  name: 'user',
+export const usersSlice = createSlice({
+  name: 'users',
   initialState,
   reducers: {
-    resetUsers: (state) => {
-      state.loading = false;
-      state.list = [];
-      state.item = null;
-      state.pagination = initialState.pagination;
-    },
     setList: (state, action: PayloadAction<UserList[]>) => {
       state.list = action.payload;
     },
@@ -49,6 +45,12 @@ export const userSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
+    builder.addCase(resetMe, (state) => {
+      state.loading = false;
+      state.list = [];
+      state.item = null;
+      state.pagination = initialState.pagination;
+    });
     builder
       .addCase(requestUsers.pending, (state) => {
         state.loading = true;
@@ -87,9 +89,9 @@ export const userSlice = createSlice({
   }
 });
 
-export const { resetUsers, setPage, setPageSize } = userSlice.actions;
+export const { setList, setItem, setPage, setPageSize } = usersSlice.actions;
 
-export const requestUsers = createAsyncThunk('requestUsers', async (data: { page: number; pageSize: number }) => {
+export const requestUsers = createAppAsyncThunk('users/getList', async (data: { page: number; pageSize: number }) => {
   try {
     const response = await axiosInstance.get<undefined, BaseResponse<Pagination<UserList>>>('/users', {
       params: {
@@ -103,7 +105,7 @@ export const requestUsers = createAsyncThunk('requestUsers', async (data: { page
   }
 });
 
-export const requestUser = createAsyncThunk('requestUser', async (id: string) => {
+export const requestUser = createAppAsyncThunk('users/getItem', async (id: string) => {
   try {
     const response = await axiosInstance.get<undefined, BaseResponse<UserItem>>(`/users/${id}`);
     return response.data;

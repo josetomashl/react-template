@@ -17,8 +17,11 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    updateMe: (state, action: PayloadAction<UserItem | null>) => {
+    updateMe: (state, action: PayloadAction<UserItem>) => {
       state.me = action.payload;
+    },
+    resetMe: (state) => {
+      state.me = null;
     }
   },
   extraReducers: (builder) => {
@@ -67,7 +70,7 @@ export const authSlice = createSlice({
   }
 });
 
-export const { updateMe } = authSlice.actions;
+export const { updateMe, resetMe } = authSlice.actions;
 
 export const requestLogin = createAsyncThunk('requestLogin', async (payload: LoginRequest) => {
   try {

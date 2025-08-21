@@ -12,8 +12,8 @@ export type UserItem = UserList & {
   surname: string;
   role: UserRoles;
   // ...
-  created_at: string;
-  updated_at: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type UserRoles = 'SUPER' | 'ADMIN' | 'USER';

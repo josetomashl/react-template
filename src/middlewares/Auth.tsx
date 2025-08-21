@@ -1,12 +1,13 @@
 import { useAuth } from '@/hooks/useAuth';
-import { Navigate, Outlet } from 'react-router';
+import type { PropsWithChildren } from 'react';
+import { Navigate } from 'react-router';
 
-export function AuthMiddleware() {
+export function AuthMiddleware({ children }: PropsWithChildren) {
   const { token } = useAuth();
 
   if (!token) {
     return <Navigate to='/login' replace />;
   }
 
-  return <Outlet />;
+  return children;
 }

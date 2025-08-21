@@ -1,17 +1,19 @@
 import type { UserRoles } from '@/dtos/User';
 import { useAppSelector } from '@/store';
-import { Navigate, Outlet } from 'react-router';
+import type { ReactNode } from 'react';
+import { Navigate } from 'react-router';
 
 type Props = {
   role: UserRoles;
+  children: ReactNode;
 };
 
 export function RoleMiddleware(props: Props) {
   const me = useAppSelector((state) => state.auth.me);
 
-  if (!me || me.role !== props.role) {
-    return <Navigate to='/not-found' />;
+  if (me?.role !== props.role) {
+    return <Navigate to='/not-found' replace />;
   }
 
-  return <Outlet />;
+  return props.children;
 }
