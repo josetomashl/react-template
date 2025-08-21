@@ -7,7 +7,7 @@ type HeaderItem = { key: string; label: string };
 
 type Props = {
   headers: HeaderItem[];
-  module: 'user';
+  module: 'users' | 'posts';
   onPageChange: (page: number) => Promise<void> | void;
   onPageSizeChange: (pageSize: number) => Promise<void> | void;
 };
