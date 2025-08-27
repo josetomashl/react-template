@@ -113,9 +113,7 @@ export const requestPosts = createAppAsyncThunk('posts/getList', async (data: { 
   }
 });
 
-export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string, { dispatch, getState }) => {
-  dispatch(requestPosts({ page: 0, pageSize: 10 }));
-  console.log(getState().auth.loading);
+export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string) => {
   try {
     const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
     return response.data;
