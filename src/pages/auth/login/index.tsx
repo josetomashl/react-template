@@ -3,7 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
 import { RegExp } from '@/plugins/constants/regExp';
 import { useAppSelector } from '@/store';
-import { FormEvent, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 import styles from './styles.module.scss';
 
 export function LoginPage() {

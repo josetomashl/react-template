@@ -1,4 +1,4 @@
-import type { User } from './User';
+import type { UserItem } from './User';
 
 export interface LoginRequest {
   email: string;
@@ -14,7 +14,7 @@ export interface RefreshRequest {
   refreshToken: string;
 }
 export interface AuthResponse {
-  customer: User;
+  customer: UserItem;
   token: string;
   refreshToken: string;
 }
