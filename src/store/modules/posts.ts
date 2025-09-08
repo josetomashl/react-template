@@ -3,7 +3,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Pagination } from '@/dtos';
 import type { PostItem, PostList } from '@/dtos/Post';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { resetMe } from '@/store/modules/auth';
 import { createAppAsyncThunk } from '@/store/thunk';
 
 interface PostsState {
@@ -69,15 +68,15 @@ export const postsSlice = createSlice({
     },
     setPageSize: (state, action: PayloadAction<number>) => {
       state.pagination.pageSize = action.payload;
-    }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(resetMe, (state) => {
+    },
+    resetPosts: (state) => {
       state.loading = false;
       state.list = [];
       state.item = null;
       state.pagination = initialState.pagination;
-    });
+    }
+  },
+  extraReducers: (builder) => {
     builder
       .addCase(requestPosts.pending, (state) => {
         state.loading = true;

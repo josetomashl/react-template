@@ -1,17 +1,22 @@
-import type { UserRole } from '@/dtos/User';
-import { useAppSelector } from '@/store';
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 
+import { Spinner } from '@/components/Spinner';
+import { useAuth } from '@/hooks/useAuth';
+
 type Props = {
-  role: UserRole;
+  roles: string[];
   children: ReactNode;
 };
 
 export function RoleMiddleware(props: Props) {
-  const me = useAppSelector((state) => state.auth.me);
+  const { isLoading, me } = useAuth();
 
-  if (me?.role !== props.role) {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!me || !props.roles.includes(me.role)) {
     return <Navigate to='/not-found' replace />;
   }
 

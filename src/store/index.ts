@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { authSlice } from '@/store/modules/auth';
 import { postsSlice } from '@/store/modules/posts';
 import { rootSlice } from '@/store/modules/root';
 import { usersSlice } from '@/store/modules/users';
@@ -10,7 +9,6 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   reducer: {
     root: rootSlice.reducer,
-    auth: authSlice.reducer,
     users: usersSlice.reducer,
     posts: postsSlice.reducer
   }
