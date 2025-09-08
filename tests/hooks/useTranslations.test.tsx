@@ -8,7 +8,7 @@ import { renderHook } from '@testing-library/react';
 describe('useTranslations', () => {
   it('throws error when used outside TranslationProvider', () => {
     expect(() => renderHook(() => useTranslations())).toThrowError(
-      'useTranslations must be used within TranslationProvider'
+      'useTranslations hook must be used within TranslationProvider'
     );
   });
 
