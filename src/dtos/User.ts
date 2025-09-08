@@ -1,19 +1,19 @@
-export type UserKV = {
+import { USERS } from '@/plugins/constants/modules/users';
+
+export interface UserKV {
   hash: string;
   full_name: string;
-};
+}
 
-export type UserList = UserKV & {
+export interface UserList extends UserKV {
   email: string;
-};
+  createdAt: Date;
+}
 
-export type UserItem = UserList & {
+export interface UserItem extends UserList {
   name: string;
   surname: string;
-  role: UserRoles;
-  // ...
-  createdAt: Date;
+  role: keyof typeof USERS.roles;
+  status: keyof typeof USERS.status;
   updatedAt: Date;
-};
-
-export type UserRoles = 'SUPER' | 'ADMIN' | 'USER';
+}

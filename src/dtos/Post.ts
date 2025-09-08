@@ -1,12 +1,16 @@
+import { POSTS } from '@/plugins/constants/modules/posts';
+
 export interface PostKV {
   hash: string;
   title: string;
 }
 export interface PostList extends PostKV {
   author: string;
-  createdAt: Date;
+  tags: string[];
+  status: keyof typeof POSTS.status;
 }
 export interface PostItem extends PostKV {
   content: string;
+  createdAt: Date;
   updatedAt: Date;
 }
