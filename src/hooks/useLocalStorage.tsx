@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useLocalStorage<T = string>(key: string, defaultValue?: T): [T | null, (value: T) => void] {
+export function useLocalStorage<T = string>(key: string, defaultValue?: T): [T | null, (value: T | null) => void] {
   const [storedValue, setStoredValue] = useState<T | null>(() => {
     const value = window.localStorage.getItem(key);
     if (value) {
@@ -22,7 +22,12 @@ export function useLocalStorage<T = string>(key: string, defaultValue?: T): [T |
         window.localStorage.setItem(key, typeof newValue === 'string' ? newValue : JSON.stringify(newValue));
       } catch {
         setStoredValue(defaultValue ?? null);
-        window.localStorage.setItem(key, JSON.stringify(defaultValue ?? null));
+        window.localStorage.setItem(
+          key,
+          JSON.stringify(
+            defaultValue ? (typeof defaultValue === 'string' ? defaultValue : JSON.stringify(defaultValue)) : null
+          )
+        );
       }
     } else {
       setStoredValue(null);
