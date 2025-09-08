@@ -1,7 +1,7 @@
 import { Input } from '@/components/Input';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
-import { RegExp } from '@/plugins/constants/regExp';
+import { REGEXP } from '@/plugins/regexps';
 import { useAppSelector } from '@/store';
 import { type FormEvent, useState } from 'react';
 import styles from './styles.module.scss';
@@ -41,7 +41,7 @@ export function LoginPage() {
               errors: !valid ? [...prev.errors, 'email'] : prev.errors.filter((e) => e !== 'email')
             }));
           }}
-          regExp={RegExp.email}
+          regExp={REGEXP.email}
           errorMessage='Please enter a valid email address'
           required
         />
@@ -57,7 +57,7 @@ export function LoginPage() {
             }));
           }}
           required
-          regExp={RegExp.password}
+          regExp={REGEXP.password}
           errorMessage='Password must be at least 8 characters long and contain at least one number, one uppercase letter and one lowercase letter'
         />
 

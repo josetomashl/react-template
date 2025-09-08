@@ -1,6 +1,7 @@
+import { beforeEach, describe, expect, it } from 'vitest';
+
 import { useTitle } from '@/hooks/useTitle';
 import { render } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
 
 function TestComponent({ title }: { title: string }) {
   useTitle(title);

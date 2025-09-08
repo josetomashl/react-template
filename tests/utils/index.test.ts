@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { css } from '../../src/utils';
+
+import { css } from '@/utils';
 
 describe('utils test suite', () => {
   describe('css method', () => {
