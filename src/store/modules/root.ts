@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import { resetMe } from './auth';
 
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';

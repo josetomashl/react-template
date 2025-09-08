@@ -1,7 +1,8 @@
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { AuthResponse, LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
 import type { UserItem } from '@/dtos/User';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   loading: boolean;

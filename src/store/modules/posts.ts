@@ -1,9 +1,10 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { Pagination } from '@/dtos';
 import type { PostItem, PostList } from '@/dtos/Post';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from '..';
-import { resetMe } from './auth';
+import { resetMe } from '@/store/modules/auth';
+import { createAppAsyncThunk } from '@/store/thunk';
 
 interface PostsState {
   loading: boolean;
@@ -26,6 +27,38 @@ const initialState: PostsState = {
     total: 0
   }
 };
+
+export const requestPosts = createAppAsyncThunk('posts/getList', async (data: { page: number; pageSize: number }) => {
+  try {
+    const response = await axiosInstance.get<undefined, BaseResponse<Pagination<PostList>>>('/posts', {
+      params: {
+        page: data.page,
+        pageSize: data.pageSize
+      }
+    });
+    return response.data;
+  } catch {
+    return;
+  }
+});
+
+export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string) => {
+  try {
+    const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
+    return response.data;
+  } catch {
+    return;
+  }
+});
+
+export const createPost = createAppAsyncThunk('posts/postItem', async (data: { title: string; content: string }) => {
+  try {
+    const response = await axiosInstance.post<undefined, BaseResponse<PostItem>>(`/posts`, data);
+    return response.data;
+  } catch {
+    return;
+  }
+});
 
 export const postsSlice = createSlice({
   name: 'posts',
@@ -98,35 +131,3 @@ export const postsSlice = createSlice({
 });
 
 export const { setPage, setPageSize } = postsSlice.actions;
-
-export const requestPosts = createAppAsyncThunk('posts/getList', async (data: { page: number; pageSize: number }) => {
-  try {
-    const response = await axiosInstance.get<undefined, BaseResponse<Pagination<PostList>>>('/posts', {
-      params: {
-        page: data.page,
-        pageSize: data.pageSize
-      }
-    });
-    return response.data;
-  } catch {
-    return;
-  }
-});
-
-export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string) => {
-  try {
-    const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
-    return response.data;
-  } catch {
-    return;
-  }
-});
-
-export const createPost = createAppAsyncThunk('posts/postItem', async (data: { title: string; content: string }) => {
-  try {
-    const response = await axiosInstance.post<undefined, BaseResponse<PostItem>>(`/posts`, data);
-    return response.data;
-  } catch {
-    return;
-  }
-});

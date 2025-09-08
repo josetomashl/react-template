@@ -1,9 +1,10 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { Pagination } from '@/dtos';
 import type { UserItem, UserList } from '@/dtos/User';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from '..';
-import { resetMe } from './auth';
+import { resetMe } from '@/store/modules/auth';
+import { createAppAsyncThunk } from '@/store/thunk';
 
 interface UsersState {
   loading: boolean;
