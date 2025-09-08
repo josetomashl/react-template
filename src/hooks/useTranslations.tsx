@@ -5,7 +5,7 @@ export default function useTranslations() {
   const context = useContext(TranslationContext);
 
   if (!context) {
-    throw new Error('useTranslations must be used within TranslationProvider');
+    throw new Error('useTranslations hook must be used within TranslationProvider');
   }
 
   return context;
