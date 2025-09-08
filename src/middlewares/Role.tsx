@@ -1,10 +1,10 @@
-import type { UserRoles } from '@/dtos/User';
+import type { UserRole } from '@/dtos/User';
 import { useAppSelector } from '@/store';
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 
 type Props = {
-  role: UserRoles;
+  role: UserRole;
   children: ReactNode;
 };
 
