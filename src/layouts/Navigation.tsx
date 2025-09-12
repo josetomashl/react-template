@@ -1,5 +1,6 @@
-import { Sidebar } from '@/components/Sidebar';
 import { Outlet } from 'react-router';
+
+import { Sidebar } from '@/components/Sidebar';
 
 export function NavigationLayout() {
   return (

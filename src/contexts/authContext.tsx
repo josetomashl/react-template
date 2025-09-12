@@ -1,3 +1,6 @@
+import { createContext, useState, type PropsWithChildren } from 'react';
+import { useNavigate } from 'react-router';
+
 import type { AuthResponse, LoginRequest, RefreshRequest, RegisterRequest } from '@/dtos/Auth';
 import type { UserItem } from '@/dtos/User';
 import { useCookie } from '@/hooks/useCookie';
@@ -5,8 +8,6 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import axiosInstance, { BaseResponse } from '@/plugins/axios';
 import { CookieKeys } from '@/plugins/constants/cookies';
 import { StorageKeys } from '@/plugins/constants/storage';
-import { createContext, useState, type PropsWithChildren } from 'react';
-import { useNavigate } from 'react-router';
 
 interface AuthContextType {
   isLoading: boolean;
