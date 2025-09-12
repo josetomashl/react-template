@@ -1,8 +1,9 @@
-import { store } from '@/store';
-import { pushNotification } from '@/store/modules/root';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { CookieKeys } from './constants/cookies';
+
+import { CookieKeys } from '@/plugins/constants/cookies';
+import { store } from '@/store';
+import { pushNotification } from '@/store/modules/root';
 
 export type BaseResponse<T = null> = {
   data: T;
