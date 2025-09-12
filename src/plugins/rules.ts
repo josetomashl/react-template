@@ -1,4 +1,4 @@
-import { REGEXP } from './regexps';
+import { REGEXP } from './regex';
 
 const required = (v: unknown) => !!v || v === 0 || 'Campo obligatorio.';
 const email = (v: string) => !v || REGEXP.email.test(v) || 'Introduce un email válido.';

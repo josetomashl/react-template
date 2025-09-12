@@ -45,11 +45,16 @@ axiosInstance.interceptors.response.use(
     switch (error.response.status) {
       case 400:
         // serverData.data = Object with error messages like: {email: ["Este valor no es una dirección de email válida."]}
-        message = 'Petición no válida. Revisa todos los campos e inténtalo de nuevo.';
+        message =
+          'Algo no ha ido como debería, revisa todos los campos e inténtalo de nuevo. Si el error persiste contacta con soporte.';
         break;
       case 401:
       case 403:
+        message = 'Usuario no autorizado.';
+        break;
       case 404:
+        message = 'Recurso no disponible.';
+        break;
       case 418:
         message = serverData.data.message;
         break;

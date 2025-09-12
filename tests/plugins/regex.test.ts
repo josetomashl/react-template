@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { REGEXP } from '@/plugins/regexps';
+import { REGEXP } from '@/plugins/regex';
 
 describe('REGEXP', () => {
   describe('email', () => {
