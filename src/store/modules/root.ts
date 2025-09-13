@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { resetMe } from './auth';
 
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 export interface NotificationItem {
@@ -27,11 +26,6 @@ export const rootSlice = createSlice({
     removeNotification: (state, action: PayloadAction<string>) => {
       state.notifications = state.notifications.filter((n) => n.id !== action.payload);
     }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(resetMe, (state) => {
-      state.notifications = [];
-    });
   }
 });
 

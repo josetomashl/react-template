@@ -1,9 +1,15 @@
-import { useAuth } from '@/hooks/useAuth';
-import type { PropsWithChildren } from 'react';
+import type { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 
-export function AuthMiddleware({ children }: PropsWithChildren) {
-  const { token } = useAuth();
+import { Spinner } from '@/components/Spinner';
+import { useAuth } from '@/hooks/useAuth';
+
+export function AuthMiddleware({ children }: { children: ReactNode }) {
+  const { isLoading, token } = useAuth();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   if (!token) {
     return <Navigate to='/login' replace />;

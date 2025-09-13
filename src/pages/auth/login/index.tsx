@@ -1,15 +1,13 @@
 import { Input } from '@/components/Input';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
-import { RegExp } from '@/plugins/constants/regExp';
-import { useAppSelector } from '@/store';
+import { REGEXP } from '@/plugins/regex';
 import { type FormEvent, useState } from 'react';
 import styles from './styles.module.scss';
 
 export function LoginPage() {
   useTitle('Login page');
-  const auth = useAppSelector((state) => state.auth);
-  const { login } = useAuth();
+  const { isLoading, login } = useAuth();
 
   const [form, setForm] = useState<{
     email: string;
@@ -23,7 +21,7 @@ export function LoginPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login({ email: form.email, password: form.password });
+    await login({ email: form.email, password: form.password });
   };
 
   return (
@@ -41,7 +39,7 @@ export function LoginPage() {
               errors: !valid ? [...prev.errors, 'email'] : prev.errors.filter((e) => e !== 'email')
             }));
           }}
-          regExp={RegExp.email}
+          regExp={REGEXP.email}
           errorMessage='Please enter a valid email address'
           required
         />
@@ -57,11 +55,11 @@ export function LoginPage() {
             }));
           }}
           required
-          regExp={RegExp.password}
+          regExp={REGEXP.password}
           errorMessage='Password must be at least 8 characters long and contain at least one number, one uppercase letter and one lowercase letter'
         />
 
-        <button type='submit' disabled={auth.loading || form.errors.length > 0}>
+        <button type='submit' disabled={isLoading || form.errors.length > 0}>
           Login
         </button>
       </form>

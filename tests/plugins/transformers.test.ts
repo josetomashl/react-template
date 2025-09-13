@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { formatTwoDigit, toDate, toDateTime, toPrice, toTime } from '../../src/utils/transformers';
+
+import { formatTwoDigit, toDate, toDateTime, toPrice, toTime } from '@/plugins/transformers';
 
 describe('transformers test suite', () => {
   describe('formatTwoDigit method', () => {

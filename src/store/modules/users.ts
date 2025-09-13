@@ -1,9 +1,9 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { Pagination } from '@/dtos';
 import type { UserItem, UserList } from '@/dtos/User';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from '..';
-import { resetMe } from './auth';
+import { createAppAsyncThunk } from '@/store/thunk';
 
 interface UsersState {
   loading: boolean;
@@ -42,15 +42,15 @@ export const usersSlice = createSlice({
     },
     setPageSize: (state, action: PayloadAction<number>) => {
       state.pagination.pageSize = action.payload;
-    }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(resetMe, (state) => {
+    },
+    resetUsers: (state) => {
       state.loading = false;
       state.list = [];
       state.item = null;
       state.pagination = initialState.pagination;
-    });
+    }
+  },
+  extraReducers: (builder) => {
     builder
       .addCase(requestUsers.pending, (state) => {
         state.loading = true;

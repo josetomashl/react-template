@@ -1,5 +1,6 @@
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { createContext, type PropsWithChildren, useCallback, useEffect, useState } from 'react';
+
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 export type LocaleType = 'en' | 'es';
 type Translations = Record<string, string>;

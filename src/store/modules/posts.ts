@@ -1,9 +1,9 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { Pagination } from '@/dtos';
 import type { PostItem, PostList } from '@/dtos/Post';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { createAppAsyncThunk } from '..';
-import { resetMe } from './auth';
+import { createAppAsyncThunk } from '@/store/thunk';
 
 interface PostsState {
   loading: boolean;
@@ -27,6 +27,38 @@ const initialState: PostsState = {
   }
 };
 
+export const requestPosts = createAppAsyncThunk('posts/getList', async (data: { page: number; pageSize: number }) => {
+  try {
+    const response = await axiosInstance.get<undefined, BaseResponse<Pagination<PostList>>>('/posts', {
+      params: {
+        page: data.page,
+        pageSize: data.pageSize
+      }
+    });
+    return response.data;
+  } catch {
+    return;
+  }
+});
+
+export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string) => {
+  try {
+    const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
+    return response.data;
+  } catch {
+    return;
+  }
+});
+
+export const createPost = createAppAsyncThunk('posts/postItem', async (data: { title: string; content: string }) => {
+  try {
+    const response = await axiosInstance.post<undefined, BaseResponse<PostItem>>(`/posts`, data);
+    return response.data;
+  } catch {
+    return;
+  }
+});
+
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -36,15 +68,15 @@ export const postsSlice = createSlice({
     },
     setPageSize: (state, action: PayloadAction<number>) => {
       state.pagination.pageSize = action.payload;
-    }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(resetMe, (state) => {
+    },
+    resetPosts: (state) => {
       state.loading = false;
       state.list = [];
       state.item = null;
       state.pagination = initialState.pagination;
-    });
+    }
+  },
+  extraReducers: (builder) => {
     builder
       .addCase(requestPosts.pending, (state) => {
         state.loading = true;
@@ -98,35 +130,3 @@ export const postsSlice = createSlice({
 });
 
 export const { setPage, setPageSize } = postsSlice.actions;
-
-export const requestPosts = createAppAsyncThunk('posts/getList', async (data: { page: number; pageSize: number }) => {
-  try {
-    const response = await axiosInstance.get<undefined, BaseResponse<Pagination<PostList>>>('/posts', {
-      params: {
-        page: data.page,
-        pageSize: data.pageSize
-      }
-    });
-    return response.data;
-  } catch {
-    return;
-  }
-});
-
-export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string) => {
-  try {
-    const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
-    return response.data;
-  } catch {
-    return;
-  }
-});
-
-export const createPost = createAppAsyncThunk('posts/postItem', async (data: { title: string; content: string }) => {
-  try {
-    const response = await axiosInstance.post<undefined, BaseResponse<PostItem>>(`/posts`, data);
-    return response.data;
-  } catch {
-    return;
-  }
-});

@@ -1,13 +1,14 @@
+import { type ReactNode } from 'react';
+import { describe, expect, it } from 'vitest';
+
 import { TranslationProvider } from '@/contexts/translationContext';
 import useTranslations from '@/hooks/useTranslations';
 import { renderHook } from '@testing-library/react';
-import { type ReactNode } from 'react';
-import { describe, expect, it } from 'vitest';
 
 describe('useTranslations', () => {
   it('throws error when used outside TranslationProvider', () => {
     expect(() => renderHook(() => useTranslations())).toThrowError(
-      'useTranslations must be used within TranslationProvider'
+      'useTranslations hook must be used within TranslationProvider'
     );
   });
 
