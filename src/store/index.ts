@@ -3,18 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { postsSlice } from '@/store/modules/posts';
 import { rootSlice } from '@/store/modules/root';
-import { usersSlice } from '@/store/modules/users';
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   reducer: {
     root: rootSlice.reducer,
-    users: usersSlice.reducer,
     posts: postsSlice.reducer
   }
 });
 
-export type AppStore = typeof store;
+// export type AppStore = typeof store;
 export type AppDispatch = typeof store.dispatch;
 export type AppState = ReturnType<typeof store.getState>;
 
