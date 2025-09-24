@@ -8,11 +8,12 @@ export interface PostList extends PostKV {
   author: string;
   tags: string[];
   status: keyof typeof POSTS.status;
+  created_at: Date;
 }
-export interface PostItem extends PostKV {
+export interface PostItem extends PostList {
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  updated_at: Date | null;
+  is_removed: boolean;
 }
 
 export interface UpdatePostBody {
