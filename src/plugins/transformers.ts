@@ -44,9 +44,10 @@ export function toPrice(str: number | string, isAbsolute?: boolean): string | nu
 }
 
 /**
- * Formats a date string into a localized format with flexible placeholders.
+ * Formats a date string into a localized string.
  *
- * Supported placeholders:
+ * @param date - Input date string. If invalid, current date is used.
+ * @param format - Format string using supported placeholders. Defaults to 'DD/MM/YYYY'. Supported placeholders:
  *  - D: Day of month (no leading zero)
  *  - DD: Day of month (2 digits)
  *  - M: Month number (no leading zero)
@@ -55,9 +56,6 @@ export function toPrice(str: number | string, isAbsolute?: boolean): string | nu
  *  - MMMM: Full month name (e.g., 'january')
  *  - YY: Last 2 digits of year
  *  - YYYY: Full year
- *
- * @param date - Input date string. If invalid, current date is used.
- * @param format - Format string using supported placeholders.
  * @param locale - BCP 47 locale string (e.g., 'es', 'en-US'). Defaults to 'es'.
  * @returns A formatted, localized date string.
  */

@@ -7,3 +7,17 @@
 export function css(...classes: string[]) {
   return classes.join(' ');
 }
+
+/**
+ * Checks if a given string can be parsed into a valid date.
+ *
+ * @param str - The string to check.
+ * @returns `true` if the string represents a valid date, otherwise `false`.
+ */
+export function isDate(str?: string): boolean {
+  if (!str || typeof str !== 'string' || str.trim() === '') {
+    return false;
+  }
+  const date = new Date(str);
+  return !isNaN(date.getTime());
+}
