@@ -1,6 +1,6 @@
+import { Icon } from '@/components/Icon';
+import { Spinner } from '@/components/Spinner';
 import { useAppSelector } from '@/store';
-import { Icon } from '../Icon';
-import { Spinner } from '../Spinner';
 import styles from './styles.module.scss';
 
 type HeaderItem = { key: string; label: string };
@@ -56,7 +56,7 @@ export function Table(props: Props) {
                       color={row[header.key as keyof typeof row] ? 'green' : 'red'}
                     />
                   ) : (
-                    row[header.key as keyof typeof row] || 'N/A'
+                    row[header.key as keyof typeof row].toString() || 'N/A'
                   )}
                 </td>
               ))}
