@@ -1,6 +1,6 @@
 import { Icon } from '@/components/Icon';
 import { Spinner } from '@/components/Spinner';
-import { useAppSelector } from '@/store';
+import { useAppSelector } from '@/store/hooks';
 import styles from './styles.module.scss';
 
 type HeaderItem = { key: string; label: string };
@@ -11,6 +11,8 @@ type Props = {
   onPageChange: (page: number) => Promise<void> | void;
   onPageSizeChange: (pageSize: number) => Promise<void> | void;
 };
+
+// TODO: split into Table & Pagination components. Moreover, change Table props to be headers & data. In pagination component use module names to retrieve pagination data and trigger actions dynamically
 
 export function Table(props: Props) {
   const module = useAppSelector((state) => state[props.module]);
