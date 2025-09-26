@@ -4,19 +4,19 @@ export type UserRole = keyof typeof USERS.roles;
 export type UserStatus = keyof typeof USERS.status;
 
 export interface UserKV {
-  hash: string;
+  id: string;
   full_name: string;
 }
 
 export interface UserList extends UserKV {
   email: string;
-  createdAt: Date;
+  is_removed: boolean;
+  created_at: Date;
 }
 
 export interface UserItem extends UserList {
   name: string;
   surname: string;
   role: UserRole;
-  status: UserStatus;
-  updatedAt: Date;
+  updated_at: Date;
 }

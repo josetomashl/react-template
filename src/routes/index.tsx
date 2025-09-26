@@ -1,8 +1,9 @@
+import { Route, Routes } from 'react-router';
+
 import { AuthMiddleware } from '@/middlewares/Auth';
 import { LoginPage } from '@/pages/auth/login';
 import { RegisterPage } from '@/pages/auth/register';
-import { Route, Routes } from 'react-router';
-import { ProtectedRoutes } from './protected';
+import { ProtectedRoutes } from '@/routes/protected';
 
 export function AppRoutes() {
   return (

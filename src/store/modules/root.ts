@@ -1,10 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 export interface NotificationItem {
   id: string;
   message: string;
-  type: NotificationType;
+  type: 'success' | 'error' | 'info' | 'warning';
 }
 
 interface RootState {
