@@ -1,25 +1,33 @@
 import { POSTS } from '@/plugins/constants/modules/posts';
+import type { TagKV } from './Tag';
 
 export interface PostKV {
-  hash: string;
+  id: string;
   title: string;
 }
+
 export interface PostList extends PostKV {
-  author: string;
-  tags: string[];
+  tags: TagKV[];
   status: keyof typeof POSTS.status;
-  created_at: Date;
+  createdAt: string;
+  updatedAt: string | null;
+  deletedAt: string | null;
 }
+
 export interface PostItem extends PostList {
   content: string;
-  updated_at: Date | null;
-  is_removed: boolean;
+  user: {
+    id: string;
+    full_name: string;
+    email: string;
+    role: string;
+    posts: PostKV[];
+  };
 }
 
 export interface UpdatePostBody {
   title: string;
   content: string;
-  author: string;
   tags: string[];
   status: keyof typeof POSTS.status;
 }
@@ -27,6 +35,6 @@ export interface UpdatePostBody {
 export interface CreatePostBody {
   title: string;
   content: string;
-  author: string;
   tags: string[];
+  status: keyof typeof POSTS.status;
 }

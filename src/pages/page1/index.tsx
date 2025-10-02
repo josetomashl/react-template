@@ -23,7 +23,7 @@ export function Page1() {
   return (
     <div>
       <p className={styles.something}>Page 1</p>
-      {/* <p>Post id: {post.hash}</p> */}
+      {/* <p>Post id: {post.id}</p> */}
     </div>
   );
 }

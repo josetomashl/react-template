@@ -41,9 +41,9 @@ export const requestPosts = createAppAsyncThunk('posts/getList', async (data: { 
   }
 });
 
-export const requestPost = createAppAsyncThunk('posts/getItem', async (hash: string) => {
+export const requestPost = createAppAsyncThunk('posts/getItem', async (id: string) => {
   try {
-    const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${hash}`);
+    const response = await axiosInstance.get<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
     return response.data;
   } catch {
     return;
@@ -60,10 +60,10 @@ export const createPost = createAppAsyncThunk('posts/postItem', async (data: Cre
 });
 export const updatePost = createAppAsyncThunk(
   'posts/updateItem',
-  async (data: { hash: string; payload: UpdatePostBody }) => {
+  async (data: { id: string; payload: UpdatePostBody }) => {
     try {
       const response = await axiosInstance.patch<UpdatePostBody, BaseResponse<PostItem>>(
-        `/posts/${data.hash}`,
+        `/posts/${data.id}`,
         data.payload
       );
       return response.data;
@@ -72,9 +72,9 @@ export const updatePost = createAppAsyncThunk(
     }
   }
 );
-export const deletePost = createAppAsyncThunk('posts/deleteItem', async (hash: string) => {
+export const deletePost = createAppAsyncThunk('posts/deleteItem', async (id: string) => {
   try {
-    const response = await axiosInstance.delete<undefined, BaseResponse<PostItem>>(`/posts/${hash}`);
+    const response = await axiosInstance.delete<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
     return response.data;
   } catch {
     return;
@@ -171,7 +171,7 @@ export const postsSlice = createSlice({
       .addCase(deletePost.fulfilled, (state, action) => {
         if (action.payload) {
           state.item = null;
-          state.list.filter((i) => i.hash !== action.payload!.hash);
+          state.list.filter((i) => i.id !== action.payload!.id);
         }
         state.loading = false;
       });

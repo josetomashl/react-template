@@ -1,4 +1,5 @@
 import { USERS } from '@/plugins/constants/modules/users';
+import type { PostList } from './Post';
 
 export type UserRole = keyof typeof USERS.roles;
 export type UserStatus = keyof typeof USERS.status;
@@ -10,13 +11,14 @@ export interface UserKV {
 
 export interface UserList extends UserKV {
   email: string;
-  is_removed: boolean;
-  created_at: Date;
+  role: UserRole;
+  createdAt: string;
+  updatedAt: string | null;
+  removedAt: string | null;
 }
 
 export interface UserItem extends UserList {
   name: string;
   surname: string;
-  role: UserRole;
-  updated_at: Date;
+  posts: PostList[];
 }

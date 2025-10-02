@@ -35,7 +35,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     const res = await axiosInstance.post<LoginRequest, BaseResponse<AuthResponse>>('/login', data);
     setIsLoading(false);
     if (res.data) {
-      setMe(res.data.customer);
+      setMe(res.data.user);
       setToken(res.data.token);
       setRefreshToken(res.data.refreshToken);
       navigate('/');
@@ -47,7 +47,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     const res = await axiosInstance.post<RegisterRequest, BaseResponse<AuthResponse>>('/register', data);
     setIsLoading(false);
     if (res.data) {
-      setMe(res.data.customer);
+      setMe(res.data.user);
       setToken(res.data.token);
       setRefreshToken(res.data.refreshToken);
       navigate('/');
@@ -59,7 +59,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     const res = await axiosInstance.post<RefreshRequest, BaseResponse<AuthResponse>>('/refresh', data);
     setIsLoading(false);
     if (res.data) {
-      setMe(res.data.customer);
+      setMe(res.data.user);
       setToken(res.data.token);
       setRefreshToken(res.data.refreshToken);
       navigate('/');
