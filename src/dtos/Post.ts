@@ -1,4 +1,4 @@
-import { POSTS } from '@/plugins/constants/modules/posts';
+import { POSTS } from '@/constants/posts';
 import type { TagKV } from './Tag';
 
 export interface PostKV {
@@ -9,8 +9,7 @@ export interface PostKV {
 export interface PostList extends PostKV {
   tags: TagKV[];
   status: keyof typeof POSTS.status;
-  createdAt: string;
-  updatedAt: string | null;
+  updatedAt: string;
   deletedAt: string | null;
 }
 
@@ -23,6 +22,7 @@ export interface PostItem extends PostList {
     role: string;
     posts: PostKV[];
   };
+  createdAt: string;
 }
 
 export interface UpdatePostBody {

@@ -1,4 +1,4 @@
-export const REGEXP = {
+export const REGEX = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
   phone: /^\+?\s*(?:[0-9]\s*){9,15}$/,

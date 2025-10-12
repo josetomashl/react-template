@@ -4,7 +4,11 @@ export interface TagKV {
 }
 
 export interface TagList extends TagKV {
-  createdAt: string;
-  updatedAt: string | null;
+  description?: string;
+  updatedAt: string;
   deletedAt: string | null;
+}
+
+export interface TagItem extends TagList {
+  createdAt: string;
 }

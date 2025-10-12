@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import { RULES } from '@/plugins/rules';
 
-// Mock REGEXP used in rules.ts
+// Mock REGEX used in rules.ts
 // vi.mock('@/plugins/regexps', () => ({
-//   REGEXP: {
+//   REGEX: {
 //     email: { test: (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
 //     password: { test: (v: string) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(v) },
 //     phone: { test: (v: string) => /^\+?\d{9,15}$/.test(v) },
