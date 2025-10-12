@@ -6,7 +6,7 @@ export function NavigationLayout() {
   return (
     <div id='navigation_layout'>
       <Sidebar />
-      <div id='outlet'>
+      <div id='navigation_outlet'>
         <Outlet />
       </div>
     </div>

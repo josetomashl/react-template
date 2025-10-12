@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type { Pagination } from '@/dtos';
-import type { PostItem, PostList } from '@/dtos/Post';
+import type { CreatePostBody, PostItem, PostList, UpdatePostBody } from '@/dtos/Post';
 import axiosInstance, { type BaseResponse } from '@/plugins/axios';
 import { createAppAsyncThunk } from '@/store/thunk';
 
@@ -50,9 +50,31 @@ export const requestPost = createAppAsyncThunk('posts/getItem', async (id: strin
   }
 });
 
-export const createPost = createAppAsyncThunk('posts/postItem', async (data: { title: string; content: string }) => {
+export const createPost = createAppAsyncThunk('posts/postItem', async (data: CreatePostBody) => {
   try {
-    const response = await axiosInstance.post<undefined, BaseResponse<PostItem>>(`/posts`, data);
+    const response = await axiosInstance.post<CreatePostBody, BaseResponse<PostItem>>(`/posts`, data);
+    return response.data;
+  } catch {
+    return;
+  }
+});
+export const updatePost = createAppAsyncThunk(
+  'posts/updateItem',
+  async (data: { id: string; payload: UpdatePostBody }) => {
+    try {
+      const response = await axiosInstance.patch<UpdatePostBody, BaseResponse<PostItem>>(
+        `/posts/${data.id}`,
+        data.payload
+      );
+      return response.data;
+    } catch {
+      return;
+    }
+  }
+);
+export const deletePost = createAppAsyncThunk('posts/deleteItem', async (id: string) => {
+  try {
+    const response = await axiosInstance.delete<undefined, BaseResponse<PostItem>>(`/posts/${id}`);
     return response.data;
   } catch {
     return;
@@ -123,6 +145,33 @@ export const postsSlice = createSlice({
       .addCase(createPost.fulfilled, (state, action) => {
         if (action.payload) {
           state.item = action.payload;
+        }
+        state.loading = false;
+      });
+    builder
+      .addCase(updatePost.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updatePost.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.item = action.payload;
+        }
+        state.loading = false;
+      });
+    builder
+      .addCase(deletePost.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deletePost.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.item = null;
+          state.list.filter((i) => i.id !== action.payload!.id);
         }
         state.loading = false;
       });

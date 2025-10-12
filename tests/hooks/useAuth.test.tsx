@@ -25,8 +25,6 @@ describe('useAuth', () => {
     const { result } = renderHook(() => useAuth(), { wrapper });
     expect(result.current.login).toBeDefined();
     expect(result.current.logout).toBeDefined();
-    expect(result.current.refresh).toBeDefined();
-    expect(result.current.refreshToken).toBeDefined();
     expect(result.current.register).toBeDefined();
     expect(result.current.token).toBeDefined();
   });

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import { CookieKeys } from '@/plugins/constants/cookies';
+import { CookieKeys } from '@/plugins/data/cookies';
 import { store } from '@/store';
 import { pushNotification } from '@/store/modules/root';
 

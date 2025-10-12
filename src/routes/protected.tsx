@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router';
 
+import { USERS } from '@/constants/users';
 import { NavigationLayout } from '@/layouts/Navigation';
 import { RoleMiddleware } from '@/middlewares/Role';
 import { NotFoundPage } from '@/pages/404';
 import { HomePage } from '@/pages/home';
 import { Page1 } from '@/pages/page1';
 import { Page2 } from '@/pages/page2';
-import { USERS } from '@/plugins/constants/modules/users';
 
 export function ProtectedRoutes() {
   return (
