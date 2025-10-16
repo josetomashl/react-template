@@ -2,12 +2,12 @@ import { type PropsWithChildren, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './styles.module.scss';
 
-interface Props extends PropsWithChildren {
+interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const Modal = (props: Props) => {
+export const Modal = (props: PropsWithChildren<Props>) => {
   const modalRoot = document.getElementById('modal-root');
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const Modal = (props: Props) => {
     }
     return () => {
       document.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = '';
     };
   }, [props.isOpen, props.onClose]);
 
