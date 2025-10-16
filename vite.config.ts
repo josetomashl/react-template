@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react-swc';
-import path from 'path';
+import { resolve } from 'node:path';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
@@ -10,11 +10,13 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src')
+        '@': resolve(__dirname, './src')
       }
     },
     build: {
       outDir: 'dist',
+      minify: true,
+      sourcemap: true,
       manifest: true
     },
     css: {
