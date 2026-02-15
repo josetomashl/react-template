@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Icon, IconNames } from '../Icon';
 import styles from './styles.module.scss';
 
@@ -43,6 +43,14 @@ function AccordionItem(
   }
 ) {
   const ref = useRef<HTMLDivElement>(null);
+  const [activeHeight, setActiveHeight] = useState(0);
+  useEffect(() => {
+    if (ref?.current && props.active === props.index) {
+      setActiveHeight(ref.current.scrollHeight);
+    } else {
+      setActiveHeight(0);
+    }
+  }, [props, ref, setActiveHeight]);
 
   return (
     <li className={styles.accordionItem}>
@@ -55,10 +63,7 @@ function AccordionItem(
         </span>
         <Icon color='white' name={props.active === props.index ? 'chevronUp' : 'chevronDown'} size={20} />
       </h3>
-      <div
-        ref={ref}
-        className={styles.accordionContent}
-        style={props.active === props.index ? { height: ref.current?.scrollHeight } : { height: 0 }}>
+      <div ref={ref} className={styles.accordionContent} style={{ height: activeHeight }}>
         <p>{props.content}</p>
       </div>
     </li>
