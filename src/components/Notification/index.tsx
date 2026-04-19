@@ -1,16 +1,16 @@
 import { Icon, type IconNames } from '@/components/Icon';
 import { type NotificationItem, removeNotification } from '@/store/modules/root';
 import { css } from '@/utils';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 
 export function Notification({ notification }: { notification: NotificationItem }) {
   const dispatch = useDispatch();
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     dispatch(removeNotification(notification.id));
-  };
+  }, [dispatch, notification]);
 
   const getIcon = () => {
     let iconName: IconNames = 'circleInfo';
@@ -34,7 +34,7 @@ export function Notification({ notification }: { notification: NotificationItem 
   useEffect(() => {
     const timer = setTimeout(handleClose, 5000);
     return () => clearTimeout(timer);
-  }, [notification.id]);
+  }, [notification.id, handleClose]);
 
   return (
     <div className={css(styles.notification, styles[`notification-${notification.type}`])}>

@@ -1,5 +1,5 @@
 import { css } from '@/utils';
-import { useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import { Icon } from '../Icon';
 import styles from './styles.module.scss';
 
@@ -31,10 +31,6 @@ export function Input({
   const [isFocused, setIsFocused] = useState(false);
   const [isValid, setIsValid] = useState(true);
 
-  useEffect(() => {
-    setIsValid(checkValidity(value));
-  }, [value]);
-
   const [isValueVisible, setIsValueVisible] = useState(false);
   const toggleVisibility = () => setIsValueVisible((prev) => !prev);
 
@@ -47,15 +43,22 @@ export function Input({
     }
   };
 
-  const checkValidity = (v: string) => {
-    if (!v && required) {
-      return false;
-    } else if (regExp) {
-      return regExp.test(v);
-    } else {
-      return true;
-    }
-  };
+  const checkValidity = useCallback(
+    (v: string) => {
+      if (!v && required) {
+        return false;
+      } else if (regExp) {
+        return regExp.test(v);
+      } else {
+        return true;
+      }
+    },
+    [required, regExp]
+  );
+
+  useEffect(() => {
+    setIsValid(checkValidity(value));
+  }, [value, checkValidity]);
 
   return (
     <div className={styles.inputWrapper}>

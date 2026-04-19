@@ -16,18 +16,14 @@ export default defineConfig([
       reactRefresh.configs.vite
     ],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2021,
       globals: globals.browser
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
-    },
     rules: {
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
-      'react-hooks/exhaustive-deps': 'off'
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/set-state-in-effect': 'warn'
     }
   }
 ]);

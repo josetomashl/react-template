@@ -6,6 +6,9 @@
   "author": "josetomas.hlopez@gmail.com",
   "description": "Production ready template for enterprise web applications.",
   "homepage": "https://github.com/josetomashl/react-template#readme",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "vite --mode development",
     "prod": "vite",
