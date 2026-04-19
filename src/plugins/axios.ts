@@ -8,15 +8,15 @@ import { pushNotification } from '@/store/modules/root';
 export type BaseResponse<T = null> = {
   data: T;
   requestId: string;
-  commons: {
-    notifications_unread: number;
-  };
 };
 
 const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_SERVER_API + '/api',
   timeout: 3000,
   headers: {
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    Pragma: 'no-cache',
+    Expires: '0',
     'Content-Type': 'application/json'
   },
   responseEncoding: 'utf-8',

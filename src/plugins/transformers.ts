@@ -21,7 +21,7 @@ export function formatTwoDigit(num: number | string): string {
  *
  * @param str - The number or string to be formatted as a price.
  * @param isAbsolute - An optional flag indicating whether to display the value as an absolute number. If `true` removes the "-" sign (if present) for negative numbers. Defaults to `false`.
- * @returns A formatted currency string in the format of 'X,XXX.XX€'.
+ * @returns A formatted currency string in the format of 'X,XXX.XX €'.
  */
 export function toPrice(str: number | string, isAbsolute?: boolean): string | null {
   const numericValue = typeof str === 'string' ? parseFloat(str) : str;

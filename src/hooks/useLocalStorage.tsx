@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export function useLocalStorage<T = string>(key: string, defaultValue?: T): [T | null, (value: T | null) => void] {
   const [storedValue, setStoredValue] = useState<T | null>(() => {
@@ -15,25 +15,28 @@ export function useLocalStorage<T = string>(key: string, defaultValue?: T): [T |
     }
   });
 
-  const setValue = (newValue: T | null) => {
-    if (newValue) {
-      try {
-        setStoredValue(newValue);
-        window.localStorage.setItem(key, typeof newValue === 'string' ? newValue : JSON.stringify(newValue));
-      } catch {
-        setStoredValue(defaultValue ?? null);
-        window.localStorage.setItem(
-          key,
-          JSON.stringify(
-            defaultValue ? (typeof defaultValue === 'string' ? defaultValue : JSON.stringify(defaultValue)) : null
-          )
-        );
+  const setValue = useCallback(
+    (newValue: T | null) => {
+      if (newValue) {
+        try {
+          setStoredValue(newValue);
+          window.localStorage.setItem(key, typeof newValue === 'string' ? newValue : JSON.stringify(newValue));
+        } catch {
+          setStoredValue(defaultValue ?? null);
+          window.localStorage.setItem(
+            key,
+            JSON.stringify(
+              defaultValue ? (typeof defaultValue === 'string' ? defaultValue : JSON.stringify(defaultValue)) : null
+            )
+          );
+        }
+      } else {
+        setStoredValue(null);
+        window.localStorage.removeItem(key);
       }
-    } else {
-      setStoredValue(null);
-      window.localStorage.removeItem(key);
-    }
-  };
+    },
+    [key, defaultValue]
+  );
 
   return [storedValue, setValue];
 }

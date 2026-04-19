@@ -4,6 +4,7 @@ import { postsSlice } from '@/store/modules/posts';
 import { rootSlice } from '@/store/modules/root';
 
 export const store = configureStore({
+  devTools: false,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   reducer: {
     root: rootSlice.reducer,
