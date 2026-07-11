@@ -10,18 +10,21 @@ import { AuthProvider } from '@/contexts/authContext';
 import { TranslationProvider } from '@/contexts/translationContext';
 import { AppRoutes } from '@/routes';
 import { store } from '@/store';
+import { ModalProvider } from './contexts/modalContext';
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <TranslationProvider>
-          <AuthProvider>
-            <AppRoutes />
-          </AuthProvider>
-          <NotificationsContainer />
-        </TranslationProvider>
-      </Provider>
+      <ModalProvider>
+        <Provider store={store}>
+          <TranslationProvider>
+            <AuthProvider>
+              <AppRoutes />
+            </AuthProvider>
+            <NotificationsContainer />
+          </TranslationProvider>
+        </Provider>
+      </ModalProvider>
     </BrowserRouter>
   </StrictMode>
 );

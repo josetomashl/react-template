@@ -1,4 +1,4 @@
-import { LocaleType } from '@/contexts/translationContext';
+import { type LocaleType } from '@/contexts/translationContext';
 
 /**
  * Ensures a number or numeric string is formatted as a two-digit string.

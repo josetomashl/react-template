@@ -1,42 +1,63 @@
-import { type PropsWithChildren, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import { useModal } from '@/hooks/useModal';
+import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const Modal = (props: PropsWithChildren<Props>) => {
-  const modalRoot = document.getElementById('modal-root');
+export const Modal = () => {
+  const { modals, closeModal } = useModal();
+  const hasModals = modals.length > 0;
 
   useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') props.onClose();
-    };
-    if (props.isOpen) {
-      document.addEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'hidden'; // Prevent background scroll
-    }
-    return () => {
-      document.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = '';
-    };
-  }, [props]);
+    if (!hasModals) return;
 
-  if (!props.isOpen || !modalRoot) {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        // Cierra solo el modal superior de la pila.
+        closeModal();
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleEsc);
+
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, [hasModals, closeModal]);
+
+  if (!hasModals) {
     return null;
   }
 
-  return createPortal(
-    <div className={styles.modalOverlay} onClick={props.onClose} role='dialog' aria-modal='true'>
-      <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()} role='document'>
-        <button className={styles.modalCloseBtn} onClick={props.onClose} aria-label='Close modal'>
-          &times;
-        </button>
-        {props.children}
-      </div>
-    </div>,
-    modalRoot
+  return (
+    <>
+      {modals.map((modal, index) => {
+        const isFullscreen = modal.variant === 'fullscreen';
+
+        const handleOverlayClick = () => {
+          if (modal.closeOnOverlayClick) {
+            closeModal({ until: modal.id });
+          }
+        };
+
+        return (
+          <div
+            key={modal.id}
+            className={styles.modalOverlay}
+            style={{ zIndex: 1000 + index }}
+            onClick={handleOverlayClick}>
+            <div
+              className={`${styles.modalContainer} ${isFullscreen ? styles.fullscreen : ''}`}
+              onClick={(e) => e.stopPropagation()}>
+              <button className={styles.closeButton} onClick={() => closeModal({ until: modal.id })}>
+                &times;
+              </button>
+
+              {modal.content}
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };

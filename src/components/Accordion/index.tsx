@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Icon, IconNames } from '../Icon';
+import { Icon, type IconNames } from '../Icon';
 import styles from './styles.module.scss';
 
 export interface AccordionItemType {

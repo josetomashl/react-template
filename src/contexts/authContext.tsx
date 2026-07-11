@@ -5,7 +5,7 @@ import type { AuthResponse, LoginRequest, RegisterRequest } from '@/dtos/Auth';
 import type { UserItem } from '@/dtos/User';
 import { useCookie } from '@/hooks/useCookie';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import axiosInstance, { BaseResponse } from '@/plugins/axios';
+import axiosInstance, { type BaseResponse } from '@/plugins/axios';
 import { CookieKeys } from '@/plugins/data/cookies';
 import { StorageKeys } from '@/plugins/data/storage';
 
