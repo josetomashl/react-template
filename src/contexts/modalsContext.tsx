@@ -34,13 +34,13 @@ interface IModalContext {
   closeModal: (options?: CloseModalOptionsType) => void;
 }
 
-const ModalContext = createContext<IModalContext | null>(null);
+const ModalsContext = createContext<IModalContext | null>(null);
 
 interface Props {
   children: ReactNode;
 }
 
-const ModalProvider = ({ children }: Props) => {
+const ModalsProvider = ({ children }: Props) => {
   const nextId = useRef(1);
   const modalsRef = useRef<IModalInstance[]>([]);
   const [modals, setModals] = useState<IModalInstance[]>([]);
@@ -177,11 +177,11 @@ const ModalProvider = ({ children }: Props) => {
   );
 
   return (
-    <ModalContext.Provider value={contextValue}>
+    <ModalsContext.Provider value={contextValue}>
       {children}
       <Modal />
-    </ModalContext.Provider>
+    </ModalsContext.Provider>
   );
 };
 
-export { ModalContext, ModalProvider };
+export { ModalsContext, ModalsProvider };

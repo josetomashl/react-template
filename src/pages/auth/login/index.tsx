@@ -1,16 +1,13 @@
 import { Input } from '@/components/Input';
 import { useAuth } from '@/hooks/useAuth';
-import { useModal } from '@/hooks/useModal';
 import { useTitle } from '@/hooks/useTitle';
 import { REGEX } from '@/plugins/data/regex';
 import { type SubmitEvent, useState } from 'react';
-import { RegisterPage } from '../register';
 import styles from './styles.module.scss';
 
 export function LoginPage() {
   useTitle('Login page');
   const { isLoading, login } = useAuth();
-  const { openModal } = useModal();
 
   const [form, setForm] = useState<{
     email: string;
@@ -65,8 +62,6 @@ export function LoginPage() {
         <button type='submit' disabled={isLoading || form.errors.length > 0}>
           Login
         </button>
-
-        <div onClick={() => openModal(<RegisterPage />, { fullScreen: false, persistent: false })}>Click</div>
       </form>
     </div>
   );

@@ -1,9 +1,9 @@
-import { useModal } from '@/hooks/useModal';
+import { useModals } from '@/hooks/useModals';
 import { useEffect } from 'react';
 import styles from './styles.module.scss';
 
 export const Modal = () => {
-  const { modals, closeModal } = useModal();
+  const { modals, closeModal } = useModals();
 
   const hasModals = modals.length > 0;
   const currentModal = hasModals ? modals.at(-1) : null;
