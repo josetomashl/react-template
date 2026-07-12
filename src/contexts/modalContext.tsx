@@ -1,21 +1,20 @@
 import { Modal } from '@/components/Modal';
 import { type ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-type ModalVariantType = 'default' | 'fullscreen';
 type CloseModalOptionsType =
   | { all: true; count?: never; until?: never }
   | { count: number; all?: never; until?: never }
   | { until: number; all?: never; count?: never };
 
 interface IModalOptions {
-  variant?: ModalVariantType;
-  closeOnOverlayClick?: boolean;
+  fullScreen?: boolean;
+  persistent?: boolean;
 }
 
 interface IModalController {
   id: number;
   close: () => void;
-  replace: (content: ReactNode, options?: Omit<IModalOptions, 'variant'>) => void;
+  replace: (content: ReactNode, options?: Omit<IModalOptions, 'fullScreen'>) => void;
   isOpen: () => boolean;
   resolve: (accepted: boolean) => void;
 }
@@ -23,8 +22,8 @@ interface IModalController {
 interface IModalInstance {
   id: number;
   content: ReactNode;
-  variant: ModalVariantType;
-  closeOnOverlayClick: boolean;
+  fullScreen: boolean;
+  persistent: boolean;
   resolve?: (accepted: boolean) => void;
 }
 
@@ -75,7 +74,7 @@ const ModalProvider = ({ children }: Props) => {
               ? {
                   ...x,
                   content,
-                  closeOnOverlayClick: options?.closeOnOverlayClick ?? x.closeOnOverlayClick
+                  persistent: options?.persistent ?? x.persistent
                 }
               : x
           )
@@ -100,8 +99,8 @@ const ModalProvider = ({ children }: Props) => {
         {
           id,
           content,
-          variant: options.variant ?? 'default',
-          closeOnOverlayClick: options.closeOnOverlayClick ?? true
+          fullScreen: options.fullScreen ?? false,
+          persistent: options.persistent ?? false
         }
       ]);
 
@@ -127,8 +126,8 @@ const ModalProvider = ({ children }: Props) => {
           {
             id,
             content,
-            variant: options.variant ?? 'default',
-            closeOnOverlayClick: options.closeOnOverlayClick ?? true,
+            fullScreen: options.fullScreen ?? false,
+            persistent: options.persistent ?? false,
             resolve: settle
           }
         ]);
