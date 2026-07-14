@@ -13,9 +13,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
-      outDir: 'dist',
-      minify: true,
-      sourcemap: true,
+      sourcemap: 'hidden',
       manifest: true
     },
     css: {
