@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useState } from 'react';
 import { Icon, type IconNames } from '../Icon';
 import { Spinner } from '../Spinner';
@@ -21,7 +21,7 @@ export function Button({
   onClick = () => {},
   disabled = false,
   type = 'button',
-  rounded = false,
+  rounded = false
 }: Props) {
   const [loading, setLoading] = useState(false);
 
@@ -42,12 +42,12 @@ export function Button({
       <button
         onClick={handleClick}
         type={type}
-        className={css(
+        className={classes(
           styles.button,
           styles.iconButton,
-          rounded ? styles.rounded : '',
-          loading ? styles.loading : '',
-          disabled ? styles.disabled : ''
+          rounded && styles.rounded,
+          loading && styles.loading,
+          disabled && styles.disabled
         )}
         disabled={disabled || loading}>
         {loading ? <Spinner /> : <Icon name={icon} />}
@@ -58,12 +58,12 @@ export function Button({
       <button
         onClick={handleClick}
         type={type}
-        className={css(
+        className={classes(
           styles.button,
           styles.iconTextButton,
-          rounded ? styles.rounded : '',
-          loading ? styles.loading : '',
-          disabled ? styles.disabled : ''
+          rounded && styles.rounded,
+          loading && styles.loading,
+          disabled && styles.disabled
         )}
         disabled={disabled || loading}>
         {loading ? (
@@ -82,11 +82,11 @@ export function Button({
       <button
         onClick={handleClick}
         type={type}
-        className={css(
+        className={classes(
           styles.button,
-          rounded ? styles.rounded : '',
-          loading ? styles.loading : '',
-          disabled ? styles.disabled : ''
+          rounded && styles.rounded,
+          loading && styles.loading,
+          disabled && styles.disabled
         )}
         disabled={disabled || loading}>
         {loading ? <Spinner /> : title}

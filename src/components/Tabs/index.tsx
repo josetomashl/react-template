@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { type PropsWithChildren, type ReactNode, useState } from 'react';
 import { Icon, type IconNames } from '../Icon';
 import styles from './styles.module.scss';
@@ -25,12 +25,12 @@ export function Tabs({ tabs, defaultActive = 0, onChange, vertical = false, chil
   };
 
   return (
-    <div className={css(styles['tabs-container'], vertical ? styles['vertical'] : '')}>
-      <div className={css(styles['tabs-header'], vertical ? styles['vertical'] : '')}>
+    <div className={classes(styles['tabs-container'], vertical && styles['vertical'])}>
+      <div className={classes(styles['tabs-header'], vertical && styles['vertical'])}>
         {tabs.map((tab, index) => (
           <div
             key={index}
-            className={css(styles['tab-item'], index === activeIndex ? styles['active'] : '')}
+            className={classes(styles['tab-item'], index === activeIndex && styles['active'])}
             onClick={() => handleTabClick(index)}>
             {tab.icon && <Icon name={tab.icon} size={24} color={tab.iconColor || '#333'} />}
             {tab.label}

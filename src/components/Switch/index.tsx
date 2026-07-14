@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useId } from 'react';
 import styles from './styles.module.scss';
 
@@ -22,7 +22,7 @@ export function Switch(props: Props) {
     <div className={styles.container}>
       <input type='checkbox' id={id} checked={props.value} onChange={handleToggle} disabled={props.disabled} />
       <span
-        className={css(styles.track, props.value ? styles.checked : '', props.disabled ? styles.disabled : '')}
+        className={classes(styles.track, props.value && styles.checked, props.disabled && styles.disabled)}
         style={{ cursor: props.disabled ? 'not-allowed' : 'pointer' }}
         onClick={handleToggle}>
         <span className={styles.thumb} />

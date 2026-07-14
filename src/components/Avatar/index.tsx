@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useState } from 'react';
 import { Icon } from '../Icon';
 import styles from './styles.module.scss';
@@ -15,10 +15,10 @@ export function Avatar({ src, alt = 'Profile image', size = 48, className = '' }
 
   return (
     <div
-      className={css(styles.avatar, className)}
+      className={classes(styles.avatar, className)}
       style={{
         width: size,
-        height: size,
+        height: size
       }}>
       {!imgError ? (
         <img

@@ -1,5 +1,5 @@
 import { Icon } from '@/components/Icon';
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
 import { navItems, type NavLinkItem } from './links';
@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 const SidebarItem = ({ item }: { item: NavLinkItem }) => {
   return (
-    <NavLink to={item.path} className={({ isActive }) => css(isActive ? styles.active : '', styles.sidebarLink)}>
+    <NavLink to={item.path} className={({ isActive }) => classes(isActive && styles.active, styles.sidebarLink)}>
       <Icon name={item.icon} />
       <span>{item.label}</span>
     </NavLink>
@@ -41,7 +41,7 @@ export const Sidebar = () => {
                 </div>
                 <Icon name={isOpen ? 'chevronUp' : 'chevronDown'} size={18} />
               </div>
-              <div className={css(styles.sidebarChildren, isOpen ? styles.open : '')}>
+              <div className={classes(styles.sidebarChildren, isOpen && styles.open)}>
                 {item.children.map((child, childIndex) => (
                   <SidebarItem key={'child-' + childIndex} item={child} />
                 ))}

@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 
 export function Spinner({ size = 32, className = '' }: Props) {
   return (
-    <svg width={size} height={size} viewBox='0 0 50 50' className={css(styles.container, className)}>
+    <svg width={size} height={size} viewBox='0 0 50 50' className={classes(styles.container, className)}>
       <circle
         cx='25'
         cy='25'

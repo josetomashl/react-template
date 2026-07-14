@@ -1,6 +1,6 @@
 import { Icon, type IconNames } from '@/components/Icon';
 import { type NotificationItem, removeNotification } from '@/store/modules/root';
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
@@ -37,7 +37,7 @@ export function Notification({ notification }: { notification: NotificationItem 
   }, [notification.id, handleClose]);
 
   return (
-    <div className={css(styles.notification, styles[`notification-${notification.type}`])}>
+    <div className={classes(styles.notification, styles[`notification-${notification.type}`])}>
       {getIcon()}
       <p>{notification.message}</p>
     </div>

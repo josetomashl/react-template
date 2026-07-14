@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useCallback, useEffect, useId, useState } from 'react';
 import { Icon } from '../Icon';
 import styles from './styles.module.scss';
@@ -62,8 +62,7 @@ export function Input({
 
   return (
     <div className={styles.inputWrapper}>
-      <div
-        className={css(styles.container, isFocused ? styles.focused : '', !isValid && isTouched ? styles.error : '')}>
+      <div className={classes(styles.container, isFocused && styles.focused, !isValid && isTouched && styles.error)}>
         <div className={styles.inputContainer}>
           <input
             type={type === 'password' ? (!isValueVisible ? 'password' : 'text') : type}
@@ -88,7 +87,7 @@ export function Input({
           )}
         </div>
         {label && (
-          <label htmlFor={id} className={css(styles.label, !!value || isFocused ? styles.floating : '')}>
+          <label htmlFor={id} className={classes(styles.label, (!!value || isFocused) && styles.floating)}>
             {label}
           </label>
         )}

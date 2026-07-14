@@ -1,4 +1,4 @@
-import { css } from '@/utils';
+import { classes } from '@/utils';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../Icon';
 import styles from './styles.module.scss';
@@ -52,8 +52,8 @@ export function Dropdown({
   const selectedItems: DropdownItem[] = multiple
     ? (value as DropdownItem[]) || []
     : value
-    ? [value as DropdownItem]
-    : [];
+      ? [value as DropdownItem]
+      : [];
 
   const toggle = () => {
     if (disabled) {
@@ -103,7 +103,7 @@ export function Dropdown({
   return (
     <div ref={dropdownRef} className={styles.inputWrapper}>
       <div
-        className={css(styles.container, isOpen ? styles.focused : '', hasError ? styles.error : '')}
+        className={classes(styles.container, isOpen && styles.focused, hasError && styles.error)}
         onClick={toggle}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : 0}>
@@ -120,7 +120,7 @@ export function Dropdown({
             </div>
           </div>
         </div>
-        {selectedItems.length > 0 && <span className={css(styles.label, styles.floating)}>{label}</span>}
+        {selectedItems.length > 0 && <span className={classes(styles.label, styles.floating)}>{label}</span>}
         <div className={styles.dropdownContainer} onClick={(e) => e.stopPropagation()}>
           {isOpen && (
             <div className={styles.dropdownList}>
@@ -129,10 +129,10 @@ export function Dropdown({
                 return (
                   <div
                     key={item.value}
-                    className={css(
+                    className={classes(
                       styles.dropdownItem,
-                      isSelected ? styles.selected : '',
-                      index > 0 ? styles.borderTop : ''
+                      isSelected && styles.selected,
+                      index > 0 && styles.borderTop
                     )}
                     onClick={() => handleChange(item)}>
                     {multiple && (
