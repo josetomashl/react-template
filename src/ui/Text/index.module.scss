@@ -1,0 +1,101 @@
+.text {
+  margin: 0;
+}
+
+/* ===========================
+   Alignment
+   =========================== */
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-justify {
+  text-align: justify;
+}
+
+.align-start {
+  text-align: start;
+}
+
+.align-end {
+  text-align: end;
+}
+
+/* ===========================
+   Transform
+   =========================== */
+
+.transform-none {
+  text-transform: none;
+}
+
+.transform-uppercase {
+  text-transform: uppercase;
+}
+
+.transform-lowercase {
+  text-transform: lowercase;
+}
+
+.transform-capitalize {
+  text-transform: capitalize;
+}
+
+/* ===========================
+   Style
+   =========================== */
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+/* ===========================
+   Wrapping
+   =========================== */
+
+.wrap-wrap {
+  white-space: normal;
+}
+
+.wrap-nowrap {
+  white-space: nowrap;
+}
+
+.wrap-balance {
+  text-wrap: balance;
+}
+
+/* ===========================
+   Truncate
+   =========================== */
+
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ===========================
+   User Select
+   =========================== */
+
+.noSelect {
+  user-select: none;
+}
