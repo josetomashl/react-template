@@ -1,7 +1,5 @@
-import type { CSSProperties, ElementType, PropsWithChildren } from 'react';
-
 import { classes } from '@/utils';
-
+import type { CSSProperties, ElementType, PropsWithChildren } from 'react';
 import styles from './index.module.scss';
 
 interface Props {
