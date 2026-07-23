@@ -13,7 +13,7 @@ const NOTIFICATION_ICONS: Record<NotificationItem['type'], IconNames> = {
   info: 'circleInfo'
 };
 
-export const NotificationsProvider = () => {
+export const NotificationsContainer = () => {
   const notifications = useAppSelector((state) => state.root.notifications);
 
   return (

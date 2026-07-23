@@ -7,7 +7,7 @@ import '@/assets/styles/main.scss';
 import '@/assets/styles/reset.scss';
 import { AuthProvider } from '@/contexts/authContext';
 import { TranslationProvider } from '@/contexts/translationContext';
-import { NotificationsProvider } from '@/providers/notificationsProvider.tsx';
+import { NotificationsContainer } from '@/layouts/NotificationsContainer';
 import { Router } from '@/routes';
 import { store } from '@/store';
 import { ModalsProvider } from './contexts/modalsContext';
@@ -20,7 +20,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
           <TranslationProvider>
             <AuthProvider>
               <Router />
-              <NotificationsProvider />
+              <NotificationsContainer />
             </AuthProvider>
           </TranslationProvider>
         </Provider>

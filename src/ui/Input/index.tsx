@@ -61,7 +61,7 @@ export function Input({
   }, [value, checkValidity]);
 
   return (
-    <div className={styles.inputWrapper}>
+    <div className={classes(styles.inputWrapper, disabled && styles.disabled)}>
       <div className={classes(styles.container, isFocused && styles.focused, !isValid && isTouched && styles.error)}>
         <div className={styles.inputContainer}>
           <input
@@ -75,19 +75,21 @@ export function Input({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
-          {type === 'password' && (
+          {!disabled && type === 'password' && (
             <div className={styles.iconContainer} onClick={toggleVisibility}>
               <Icon name={isValueVisible ? 'chevronLeft' : 'chevronRight'} size={16} color='black' />
             </div>
           )}
-          {clearable && value && (
+          {!disabled && clearable && value && (
             <div className={styles.iconContainer} onClick={() => handleChange('')}>
               <Icon name='circleX' size={16} color='black' />
             </div>
           )}
         </div>
         {label && (
-          <label htmlFor={id} className={classes(styles.label, (!!value || isFocused) && styles.floating)}>
+          <label
+            htmlFor={id}
+            className={classes(styles.label, (!!value || isFocused || type === 'date') && styles.floating)}>
             {label}
           </label>
         )}

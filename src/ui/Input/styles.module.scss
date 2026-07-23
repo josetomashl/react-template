@@ -58,6 +58,17 @@
     }
   }
 
+  &.disabled {
+    .container {
+      border-color: $gray;
+    }
+    * {
+      color: $gray;
+      user-select: none;
+      cursor: not-allowed !important;
+    }
+  }
+
   .errorMessage {
     display: block;
     color: $error;
