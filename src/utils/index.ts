@@ -5,7 +5,7 @@
  * @returns A single string with all class names separated by a space.
  */
 export function classes(...classes: Array<string | undefined | null | false>) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(' ').replaceAll('  ', ' ').trim();
 }
 
 /**
