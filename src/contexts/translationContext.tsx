@@ -1,82 +1,83 @@
-import { createContext, type PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import { createContext, type PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-export type LocaleType = 'en' | 'es';
-type Translations = Record<string, string>;
+const SUPPORTED_LOCALES = ['en', 'es'];
+const FALLBACK_LOCALE = 'en';
 
 interface ContextProps {
-  language: LocaleType | null;
-  setLanguage: (lang: LocaleType) => void;
-  trans: (key: string, args?: Translations) => string;
+  language: string | null;
+  setLanguage: (lang: string) => void;
+  translate: (key: string, args?: Record<string, string>) => string;
 }
 
 const TranslationContext = createContext<ContextProps | null>(null);
 
-const TranslationProvider = (props: PropsWithChildren) => {
-  // Determine the default language from the browser or user system
-  const defaultLanguage = (navigator.language.split('-')[0] as LocaleType) || 'en';
+const TranslationProvider = ({ children }: PropsWithChildren) => {
+  const defaultLanguage = normalizeLocale(navigator.language);
 
-  const [language, setLanguage] = useLocalStorage<LocaleType>('LANGUAGE', defaultLanguage);
-  const [translations, setTranslations] = useState<Translations>({});
+  const [language, setLanguage] = useLocalStorage('LANGUAGE', defaultLanguage);
+  const [translations, setTranslations] = useState<Record<string, string>>({});
 
-  // Load translations whenever the language changes
   useEffect(() => {
-    document.documentElement.lang = language || defaultLanguage;
-    loadTranslations(language as LocaleType).then((data) => setTranslations(data));
+    let active = true;
+    const value = language ?? defaultLanguage;
+    document.documentElement.lang = value;
+
+    loadTranslations(value).then((data) => {
+      if (active) setTranslations(data);
+    });
+
+    return () => {
+      active = false;
+    };
   }, [language, defaultLanguage]);
 
-  // Function to translate a given key
-  const trans = useCallback(
-    (key: string, args: Record<string, string> = {}): string => {
+  const translate = useCallback(
+    (key: string, args?: Record<string, string>): string => {
       const template = translations[key] || key;
-      if (Object.keys(args).length === 0) {
-        return template;
+      if (args && Object.keys(args).length > 0) {
+        return template.replace(/{{(.*?)}}/g, (_, token: string) => {
+          const name = token.trim();
+          return args[name] ?? `{${name}}`;
+        });
       }
-      return replacePlaceholders(template, args);
+      return template;
     },
     [translations]
   );
 
-  return (
-    <TranslationContext.Provider
-      value={{
-        language,
-        setLanguage,
-        trans
-      }}>
-      {props.children}
-    </TranslationContext.Provider>
-  );
+  const value = useMemo<ContextProps>(() => ({ language, setLanguage, translate }), [language, setLanguage, translate]);
+
+  return <TranslationContext.Provider value={value}>{children}</TranslationContext.Provider>;
 };
 
 export { TranslationContext, TranslationProvider };
 
-/**
- * Asynchronously loads translation data for the specified language.
- *
- * Attempts to import a JSON file containing translations for the given `language`.
- * If the import fails (e.g., the file does not exist), it falls back to loading
- * the English translations and logs a warning to the console.
- *
- * @param language - The locale identifier (e.g., 'en', 'es', 'fr') for which to load translations.
- * @returns A promise that resolves to the loaded `Translations` object.
- */
-async function loadTranslations(language: LocaleType): Promise<Translations> {
-  try {
-    const translations = await import(`../assets/translations/${language}.json`);
-    return translations.default;
-  } catch {
-    console.warn(`Could not load translations for language: ${language}. Default language set to English.`);
-    const defaultTranslations = await import(`../assets/translations/en.json`);
-    return defaultTranslations.default;
-  }
+function normalizeLocale(value: string) {
+  const base = value.split('-')[0].toLowerCase();
+  return SUPPORTED_LOCALES.includes(base) ? base : FALLBACK_LOCALE;
 }
 
 /**
- * Replaces placeholders in a string with provided arguments.
- * Placeholders should be in the format `{{key}}`.
+ * Carga de forma asíncrona las traducciones del idioma indicado.
+ *
+ * Intenta importar el JSON correspondiente a `language`. Si falla (p. ej. el
+ * archivo no existe), recurre a las traducciones en inglés y avisa por consola.
+ *
+ * @param language - Locale a cargar (p. ej. 'en', 'es').
+ * @returns Promesa que resuelve al objeto `Translations` cargado.
  */
-function replacePlaceholders(template: string, args: Record<string, string>): string {
-  return template.replace(/{{(.*?)}}/g, (_, key) => args[key] || `{${key}}`);
+async function loadTranslations(language: string): Promise<Record<string, string>> {
+  try {
+    if (!language) {
+      throw new Error();
+    }
+    const translations = await import(`../assets/translations/${language}.json`);
+    return translations.default;
+  } catch {
+    console.warn(`Could not load translations for language: "${language}". Default language set to English.`);
+    const defaultTranslations = await import(`../assets/translations/${FALLBACK_LOCALE}.json`);
+    return defaultTranslations.default;
+  }
 }

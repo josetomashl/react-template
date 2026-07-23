@@ -1,7 +1,7 @@
-import { Input } from '@/components/Input';
 import { useAuth } from '@/hooks/useAuth';
 import { useTitle } from '@/hooks/useTitle';
 import { REGEX } from '@/plugins/data/regex';
+import { Input } from '@/ui/Input';
 import { type SubmitEvent, useState } from 'react';
 import styles from './styles.module.scss';
 

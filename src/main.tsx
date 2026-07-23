@@ -5,10 +5,10 @@ import { BrowserRouter } from 'react-router';
 
 import '@/assets/styles/main.scss';
 import '@/assets/styles/reset.scss';
-import { NotificationsContainer } from '@/components/NotificationsContainer';
 import { AuthProvider } from '@/contexts/authContext';
 import { TranslationProvider } from '@/contexts/translationContext';
-import { AppRoutes } from '@/routes';
+import { NotificationsProvider } from '@/providers/notificationsProvider.tsx';
+import { Router } from '@/routes';
 import { store } from '@/store';
 import { ModalsProvider } from './contexts/modalsContext';
 
@@ -19,9 +19,9 @@ createRoot(document.getElementById('root') as HTMLElement).render(
         <Provider store={store}>
           <TranslationProvider>
             <AuthProvider>
-              <AppRoutes />
+              <Router />
+              <NotificationsProvider />
             </AuthProvider>
-            <NotificationsContainer />
           </TranslationProvider>
         </Provider>
       </ModalsProvider>

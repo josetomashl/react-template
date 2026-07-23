@@ -1,4 +1,4 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, nanoid, type PayloadAction } from '@reduxjs/toolkit';
 
 export interface NotificationItem {
   id: string;
@@ -18,9 +18,13 @@ export const rootSlice = createSlice({
   name: 'root',
   initialState,
   reducers: {
-    pushNotification: (state, action: PayloadAction<Omit<NotificationItem, 'id'>>) => {
-      const id = `${Date.now()}`;
-      state.notifications.push({ ...action.payload, id });
+    pushNotification: {
+      reducer: (state, action: PayloadAction<NotificationItem>) => {
+        state.notifications.push(action.payload);
+      },
+      prepare: (payload: Omit<NotificationItem, 'id'>) => ({
+        payload: { ...payload, id: nanoid() }
+      })
     },
     removeNotification: (state, action: PayloadAction<string>) => {
       state.notifications = state.notifications.filter((n) => n.id !== action.payload);

@@ -1,5 +1,14 @@
 import { Modal } from '@/components/Modal';
-import { type ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  type PropsWithChildren,
+  type ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
 type CloseModalOptionsType =
   | { all: true; count?: never; until?: never }
@@ -36,11 +45,7 @@ interface IModalContext {
 
 const ModalsContext = createContext<IModalContext | null>(null);
 
-interface Props {
-  children: ReactNode;
-}
-
-const ModalsProvider = ({ children }: Props) => {
+const ModalsProvider = ({ children }: PropsWithChildren) => {
   const nextId = useRef(1);
   const modalsRef = useRef<IModalInstance[]>([]);
   const [modals, setModals] = useState<IModalInstance[]>([]);

@@ -1,5 +1,3 @@
-import { type LocaleType } from '@/contexts/translationContext';
-
 /**
  * Ensures a number or numeric string is formatted as a two-digit string.
  *
@@ -59,11 +57,7 @@ export function toPrice(str: number | string, isAbsolute?: boolean): string | nu
  * @param locale - BCP 47 locale string (e.g., 'es', 'en-US'). Defaults to 'es'.
  * @returns A formatted, localized date string.
  */
-export function toDate(
-  date: string = new Date().toISOString(),
-  format: string = 'DD/MM/YYYY',
-  locale: LocaleType = 'es'
-): string {
+export function toDate(date: string = new Date().toISOString(), format: string = 'DD/MM/YYYY', locale = 'es'): string {
   let parsedDate = new Date(date);
   if (isNaN(parsedDate.getTime())) {
     parsedDate = new Date();
@@ -116,7 +110,7 @@ export function toTime(date: string = new Date().toISOString()): string {
  * @param locale - The locale to format date string. Defaults to 'es'.
  * @returns A formatted date-time string or null if the input is invalid.
  */
-export function toDateTime(date: string = new Date().toISOString(), locale: LocaleType = 'es'): string | null {
+export function toDateTime(date: string = new Date().toISOString(), locale = 'es'): string | null {
   let parsedDate = new Date(date);
   if (isNaN(parsedDate.getTime())) {
     parsedDate = new Date();

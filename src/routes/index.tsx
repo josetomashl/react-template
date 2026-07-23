@@ -5,7 +5,7 @@ import { LoginPage } from '@/pages/auth/login';
 import { RegisterPage } from '@/pages/auth/register';
 import { ProtectedRoutes } from '@/routes/protected';
 
-export function AppRoutes() {
+export function Router() {
   return (
     <Routes>
       <Route

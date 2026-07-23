@@ -1,6 +1,6 @@
 import { classes } from '@/utils';
 import { useCallback, useEffect, useId, useState } from 'react';
-import { Icon } from '../Icon';
+import { Icon } from '../../components/Icon';
 import styles from './styles.module.scss';
 
 interface Props {
