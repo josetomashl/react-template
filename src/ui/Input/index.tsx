@@ -4,7 +4,7 @@ import { Icon } from '../../components/Icon';
 import styles from './styles.module.scss';
 
 interface Props {
-  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'range' | 'date';
+  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'date';
   label?: string;
   value: string;
   onChange: (value: string, valid: boolean) => void;
@@ -13,6 +13,7 @@ interface Props {
   clearable?: boolean;
   regExp?: RegExp;
   errorMessage?: string;
+  backgroundColor?: string;
 }
 
 export function Input({
@@ -24,7 +25,8 @@ export function Input({
   required,
   clearable,
   regExp,
-  errorMessage = 'This field is required'
+  errorMessage = 'This field is required',
+  backgroundColor
 }: Props) {
   const id = useId();
   const [isTouched, setIsTouched] = useState(false);
@@ -74,6 +76,7 @@ export function Input({
             className={styles.input}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
+            style={backgroundColor ? { backgroundColor } : undefined}
           />
           {!disabled && type === 'password' && (
             <div className={styles.iconContainer} onClick={toggleVisibility}>
@@ -89,7 +92,8 @@ export function Input({
         {label && (
           <label
             htmlFor={id}
-            className={classes(styles.label, (!!value || isFocused || type === 'date') && styles.floating)}>
+            className={classes(styles.label, (!!value || isFocused || type === 'date') && styles.floating)}
+            style={backgroundColor ? { backgroundColor } : undefined}>
             {label}
           </label>
         )}
