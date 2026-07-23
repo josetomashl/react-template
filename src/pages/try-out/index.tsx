@@ -5,8 +5,6 @@ import { Input } from '@/ui/Input';
 import { useState } from 'react';
 
 export function TryOutPage() {
-  const [tab, setTab] = useState(0);
-
   const [text, setText] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,14 +12,13 @@ export function TryOutPage() {
   const [phone, setPhone] = useState('');
   const [url, setUrl] = useState('');
   const [date, setDate] = useState('');
-  const [range, setRange] = useState('50');
   const [required, setRequired] = useState('');
   const [disabled, setDisabled] = useState('Disabled value');
   const [clearable, setClearable] = useState('Clear me');
   const [regex, setRegex] = useState('');
 
   return (
-    <Tabs onChange={setTab} tabs={[{ label: 'Button' }, { label: 'Input' }]}>
+    <Tabs tabs={[{ label: 'Button' }, { label: 'Input' }]}>
       <Tab>
         <Flex flexDirection='column' gap={12}>
           <Button title='Button 1' disabled />
